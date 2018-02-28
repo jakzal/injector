@@ -21,5 +21,17 @@
     },
     "autoload-dev": {
         "Zalas\\Injector\\Tests\\": "tests/"
+    },
+    "scripts": {
+        "install-and-update-scripts": [
+            "[ -f vendor/bin/infection ] || curl -Ls https://github.com/infection/infection/releases/download/0.8.0/infection.phar > vendor/bin/infection && chmod +x vendor/bin/infection",
+            "[ -f vendor/bin/infection.pubkey ] || curl -Ls https://github.com/infection/infection/releases/download/0.8.0/infection.phar.pubkey > vendor/bin/infection.pubkey && chmod +x vendor/bin/infection.pubkey"
+        ],
+        "post-install-cmd": [
+            "@install-and-update-scripts"
+        ],
+        "post-update-cmd": [
+            "@install-and-update-scripts"
+        ]
     }
 }
