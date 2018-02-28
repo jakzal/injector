@@ -9,7 +9,9 @@
             "email": "jakub@zalas.pl"
         }
     ],
-    "require": {},
+    "require": {
+        "psr/container": "^1.0"
+    },
     "require-dev": {
         "php": "^7.1",
         "phpunit/phpunit": "^7.0"
