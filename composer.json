@@ -17,10 +17,14 @@
         "phpunit/phpunit": "^7.0"
     },
     "autoload": {
-        "Zalas\\Injector\\": "src/"
+        "psr-4": {
+            "Zalas\\Injector\\": "src/"
+        }
     },
     "autoload-dev": {
-        "Zalas\\Injector\\Tests\\": "tests/"
+        "psr-4": {
+            "Zalas\\Injector\\Tests\\": "tests/"
+        }
     },
     "scripts": {
         "install-and-update-scripts": [
