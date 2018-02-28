@@ -1,0 +1,16 @@
+{
+    "name": "zalas/injector",
+    "description": "Injects services from a PSR-11 service container into objects",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jakub Zalas",
+            "email": "jakub@zalas.pl"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "Zalas\\Injector\\": "src/"
+    }
+}
