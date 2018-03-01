@@ -49,10 +49,11 @@ class Service2
 ```php
 use Zalas\Injector\Service\Injector;
 use Zalas\Injector\Factory\DefaultContainerFactory;
+use Zalas\Injector\Factory\DefaultExtractorFactory;
 
 $foo = new Foo();
 $container = /* create / fetch your container */;
-$injector = new Injector(new DefaultContainerFactory($container));
+$injector = new Injector(new DefaultContainerFactory($container), new DefaultExtractorFactory());
 $injector->inject($foo);
 
 var_dump($foo->hasService1());
