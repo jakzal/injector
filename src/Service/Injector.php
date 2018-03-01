@@ -11,6 +11,12 @@ use ReflectionProperty;
 use Zalas\Injector\Service\Exception\FailedToInjectServiceException;
 use Zalas\Injector\Service\Exception\MissingServiceException;
 
+/**
+ * Injects services from a PSR-11 service container to the passed object.
+ *
+ * `ContainerFactory` is used to access the service container.
+ * Details of services to inject are extracted with an `Extractor` implementation that's provided by the `ExtractorFactory`.
+ */
 class Injector
 {
     /**
