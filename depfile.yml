@@ -1,0 +1,49 @@
+paths:
+  - ./src
+exclude_files: ~
+layers:
+  - name: Factory
+    collectors:
+      - type: className
+        regex: ^Zalas\\Injector\\Factory\\.*
+  - name: PhpDocumentor
+    collectors:
+      - type: className
+        regex: ^Zalas\\Injector\\PhpDocumentor\\.*
+  - name: Service
+    collectors:
+      - type: className
+        regex: ^Zalas\\Injector\\Service\\.*
+  - name: Psr Container
+    collectors:
+      - type: className
+        regex: ^Psr\\Container\\.*
+  - name: PhpDocumentor Reflection
+    collectors:
+      - type: className
+        regex: ^phpDocumentor\\Reflection\\.*
+  - name: Other Vendors
+    collectors:
+      - type: bool
+        must:
+          # must be outside of global namespace
+          - type: className
+            regex: '[\\]+'
+        must_not:
+          # must not be one of the known vendors
+          - type: className
+            regex: ^Zalas\\Injector\\.*
+          - type: className
+            regex: ^Psr\\Container\\.*
+          - type: className
+            regex: ^phpDocumentor\\Reflection\\.*
+ruleset:
+  Factory:
+    - PhpDocumentor
+    - Service
+    - Psr Container
+  PhpDocumentor:
+    - Service
+    - PhpDocumentor Reflection
+  Service:
+    - Psr Container
