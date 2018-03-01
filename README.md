@@ -127,3 +127,9 @@ The annotation accepts service id as an optional value. Otherwise the type is us
 Implement the `Zalas\Injector\Service\Extractor` interface to support your own way of extracting definitions of
 services to inject. A factory that implements the `Zalas\Injector\Service\ExtractorFactory` will also need
 to be created to instantiate the custom extractor.
+
+## Contributing
+
+Please read the [Contributing guide](CONTRIBUTING.md) to learn about contributing to this project.
+Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
+By participating in this project you agree to abide by its terms.
