@@ -11,7 +11,7 @@ final class MissingServiceIdException extends LogicException implements Exceptio
     public function __construct(string $class, string $propertyName)
     {
         parent::__construct(
-            sprintf(
+            \sprintf(
                 'The `%s::%s` property was configured for service injection, but no service type nor id was given. ',
                 $class,
                 $propertyName

@@ -10,6 +10,6 @@ final class MissingServicePropertyException extends LogicException implements Ex
 {
     public function __construct(string $class, string $propertyName)
     {
-        parent::__construct(sprintf('The `%s::%s` property does not exist. ', $class, $propertyName));
+        parent::__construct(\sprintf('The `%s::%s` property does not exist. ', $class, $propertyName));
     }
 }

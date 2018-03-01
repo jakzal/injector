@@ -35,7 +35,7 @@ class Injector
      */
     public function inject(object $object): void
     {
-        array_map($this->getPropertyInjector($object), $this->extractProperties($object));
+        \array_map($this->getPropertyInjector($object), $this->extractProperties($object));
     }
 
     private function getPropertyInjector(object $object): Closure
@@ -59,7 +59,7 @@ class Injector
      */
     private function extractProperties(object $object): array
     {
-        return $this->extractorFactory->create()->extract(get_class($object));
+        return $this->extractorFactory->create()->extract(\get_class($object));
     }
 
     private function getService(ContainerInterface $container, Property $property)

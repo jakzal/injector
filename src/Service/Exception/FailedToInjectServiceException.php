@@ -12,7 +12,7 @@ final class FailedToInjectServiceException extends RuntimeException implements E
     public function __construct(Property $property, \Exception $previous = null)
     {
         parent::__construct(
-            sprintf(
+            \sprintf(
                 'Failed to inject the `%s` service into `%s::%s`.',
                 $property->getServiceId(),
                 $property->getClassName(),

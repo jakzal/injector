@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Zalas\Injector\Tests\Service;
 
 use Exception;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerExceptionInterface;
@@ -15,7 +16,6 @@ use Zalas\Injector\Service\Exception\MissingServiceException;
 use Zalas\Injector\Service\Extractor;
 use Zalas\Injector\Service\ExtractorFactory;
 use Zalas\Injector\Service\Injector;
-use PHPUnit\Framework\TestCase;
 use Zalas\Injector\Service\Property;
 use Zalas\Injector\Tests\Service\Fixtures\Service1;
 use Zalas\Injector\Tests\Service\Fixtures\Service2;
@@ -60,8 +60,7 @@ class InjectorTest extends TestCase
         $this->extractorFactory->create()->willReturn($this->extractor);
 
         $this->container->get(Argument::any())->willThrow(
-            new class extends Exception implements ContainerExceptionInterface
-            {
+            new class extends Exception implements ContainerExceptionInterface {
             }
         );
         $this->extractor->extract(Argument::any())->willReturn([]);
@@ -96,8 +95,7 @@ class InjectorTest extends TestCase
 
         $this->extractor->extract(Services::class)->willReturn([$property1]);
         $this->container->get('foo.service1')->willThrow(
-            new class extends Exception implements ContainerExceptionInterface
-            {
+            new class extends Exception implements ContainerExceptionInterface {
             }
         );
 
@@ -112,8 +110,7 @@ class InjectorTest extends TestCase
         $property1 = new Property(Services::class, 'service1', 'foo.service1');
 
         $this->extractor->extract(Services::class)->willReturn([$property1]);
-        $this->container->get('foo.service1')->willThrow(new class extends Exception implements NotFoundExceptionInterface
-        {
+        $this->container->get('foo.service1')->willThrow(new class extends Exception implements NotFoundExceptionInterface {
         });
 
         $this->injector->inject(new Services());

@@ -12,7 +12,7 @@ final class MissingServiceException extends RuntimeException implements Exceptio
     public function __construct(Property $property, \Exception $previous = null)
     {
         parent::__construct(
-            sprintf(
+            \sprintf(
                 'The `%s` service cannot be injected into `%s::%s` as it could not be found in the container.',
                 $property->getServiceId(),
                 $property->getClassName(),

@@ -10,5 +10,4 @@ class DuplicatedInjectExample
      * @inject bar.foo
      */
     private $fooWithDuplicatedInject;
-
 }

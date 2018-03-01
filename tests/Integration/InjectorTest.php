@@ -30,8 +30,7 @@ class InjectorTest extends TestCase
 
     private function createContainerFactory(): ContainerFactory
     {
-        return new DefaultContainerFactory(new class implements ContainerInterface
-        {
+        return new DefaultContainerFactory(new class implements ContainerInterface {
             public function get($id)
             {
                 if (Service1::class === $id) {
@@ -42,14 +41,13 @@ class InjectorTest extends TestCase
                     return new Service2();
                 }
 
-                throw new class extends \Exception implements NotFoundExceptionInterface
-                {
+                throw new class extends \Exception implements NotFoundExceptionInterface {
                 };
             }
 
             public function has($id)
             {
-                return in_array($id, [Service1::class, 'foo.service2']);
+                return \in_array($id, [Service1::class, 'foo.service2'], true);
             }
         });
     }

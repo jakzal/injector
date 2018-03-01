@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace Zalas\Injector\Tests\Factory;
 
-use Zalas\Injector\Factory\DefaultExtractorFactory;
 use PHPUnit\Framework\TestCase;
+use Zalas\Injector\Factory\DefaultExtractorFactory;
 use Zalas\Injector\PhpDocumentor\ReflectionExtractor;
-use Zalas\Injector\Service\Extractor;
 use Zalas\Injector\Service\ExtractorFactory;
 
 class DefaultExtractorFactoryTest extends TestCase

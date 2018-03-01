@@ -27,7 +27,7 @@ final class Property
      */
     public function __construct(string $className, string $propertyName, string $serviceId)
     {
-        if (!property_exists($className, $propertyName)) {
+        if (!\property_exists($className, $propertyName)) {
             throw new MissingServicePropertyException($className, $propertyName);
         }
 

@@ -19,6 +19,11 @@ final class Inject implements Tag, StaticMethod
         $this->serviceId = $serviceId;
     }
 
+    public function __toString(): string
+    {
+        return $this->serviceId;
+    }
+
     public function getName(): string
     {
         return 'inject';
@@ -35,11 +40,6 @@ final class Inject implements Tag, StaticMethod
             return $formatter->format($this);
         }
 
-        return sprintf('@%s %s', $this->getName(), $this->serviceId);
-    }
-
-    public function __toString(): string
-    {
-        return $this->serviceId;
+        return \sprintf('@%s %s', $this->getName(), $this->serviceId);
     }
 }

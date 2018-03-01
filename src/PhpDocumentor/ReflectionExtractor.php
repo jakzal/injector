@@ -10,10 +10,8 @@ use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\ContextFactory;
 use Zalas\Injector\Service\Exception\MissingServiceIdException;
-use Zalas\Injector\Service\Foo;
-use Zalas\Injector\Service\ServiceIdMissing;
-use Zalas\Injector\Service\Property;
 use Zalas\Injector\Service\Extractor;
+use Zalas\Injector\Service\Property;
 
 final class ReflectionExtractor implements Extractor
 {
@@ -26,7 +24,7 @@ final class ReflectionExtractor implements Extractor
         $docBlockFactory = DocBlockFactory::createInstance(['inject' => Inject::class]);
         $context = (new ContextFactory())->createFromReflector($classReflection);
 
-        return array_filter(array_map(function (\ReflectionProperty $propertyReflection) use ($docBlockFactory, $context) {
+        return \array_filter(\array_map(function (\ReflectionProperty $propertyReflection) use ($docBlockFactory, $context) {
             return $this->createServiceProperty($propertyReflection, $docBlockFactory, $context);
         }, $classReflection->getProperties()));
     }
@@ -62,13 +60,13 @@ final class ReflectionExtractor implements Extractor
     {
         $var = $this->getFirstTag($docBlock, 'var');
 
-        return $var instanceof Var_ ? ltrim((string)$var->getType(), '\\') : null;
+        return $var instanceof Var_ ? \ltrim((string)$var->getType(), '\\') : null;
     }
 
     private function getFirstTag(DocBlock $docBlock, string $name): ?Tag
     {
         $tags = $docBlock->getTagsByName($name);
 
-        return isset($tags[0]) ? $tags[0] : null;
+        return $tags[0] ?? null;
     }
 }
