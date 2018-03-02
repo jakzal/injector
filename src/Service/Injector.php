@@ -50,7 +50,7 @@ class Injector
         $container = $this->containerFactory->create();
 
         return function (Property $property) use ($object, $container) {
-            return $this->injectService($property, $object, $container);
+            $this->injectService($property, $object, $container);
         };
     }
 
