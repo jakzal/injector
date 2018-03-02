@@ -38,13 +38,14 @@ class Injector
     /**
      * @throws FailedToInjectServiceException
      * @throws MissingServiceException
+     * @param object $object
      */
-    public function inject(object $object): void
+    public function inject(/*object */$object): void
     {
         \array_map($this->getPropertyInjector($object), $this->extractProperties($object));
     }
 
-    private function getPropertyInjector(object $object): Closure
+    private function getPropertyInjector(/*object */$object): Closure
     {
         $container = $this->containerFactory->create();
 
@@ -53,7 +54,7 @@ class Injector
         };
     }
 
-    private function injectService(Property $property, object $object, ContainerInterface $container): void
+    private function injectService(Property $property, /*object */$object, ContainerInterface $container): void
     {
         $reflectionProperty = new ReflectionProperty($property->getClassName(), $property->getPropertyName());
         $reflectionProperty->setAccessible(true);
@@ -62,8 +63,9 @@ class Injector
 
     /**
      * @return array|Property[]
+     * @param object $object
      */
-    private function extractProperties(object $object): array
+    private function extractProperties(/*object */$object): array
     {
         return $this->extractorFactory->create()->extract(\get_class($object));
     }
