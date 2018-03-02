@@ -1,5 +1,7 @@
 # Injector
 
+[![Build Status](https://travis-ci.org/jakzal/injector.svg?branch=master)](https://travis-ci.org/jakzal/injector)
+
 Injects services from a [PSR-11 dependency injection container](https://github.com/php-fig/container) into objects.
 Service information is read from class properties annotated with `@inject`, but extension points are provided
 to read them from any source.
