@@ -33,6 +33,8 @@ Test cases are instantiated by a test framework, so it's not possible to provide
 construction time. However, since test frameworks usually give ways to hook into the initialization process, it's still
 possible to provide additional dependencies before test cases are called.
 
+PHPUnit integration is actually implemented in [`zalas/phpunit-injector`](https://packagist.org/packages/zalas/phpunit-injector) (github repository: https://github.com/jakzal/phpunit-injector).
+
 ## Installation
 
 ```bash
