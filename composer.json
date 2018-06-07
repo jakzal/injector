@@ -26,5 +26,10 @@
         "psr-4": {
             "Zalas\\Injector\\Tests\\": "tests/"
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
     }
 }
