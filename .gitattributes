@@ -10,3 +10,4 @@
 /infection.json.dist export-ignore
 /phpunit.xml.dist export-ignore
 /tests export-ignore
+/tools export-ignore
