@@ -11,6 +11,7 @@ use Zalas\Injector\Service\Property;
 use Zalas\Injector\Tests\PhpDocumentor\Fixtures\DuplicatedInjectExample;
 use Zalas\Injector\Tests\PhpDocumentor\Fixtures\DuplicatedVarExample;
 use Zalas\Injector\Tests\PhpDocumentor\Fixtures\FieldInjectionExample;
+use Zalas\Injector\Tests\PhpDocumentor\Fixtures\FieldsImportedWithTraitExample;
 use Zalas\Injector\Tests\PhpDocumentor\Fixtures\Foo\Foo;
 use Zalas\Injector\Tests\PhpDocumentor\Fixtures\MissingTypeExample;
 
@@ -40,6 +41,17 @@ class ReflectionExtractorTest extends TestCase
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithServiceIdNoVar', 'foo.bar'), $serviceProperties[0]);
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithVarNoServiceId', Foo::class), $serviceProperties[1]);
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithVarAndServiceId', 'foo.bar'), $serviceProperties[2]);
+    }
+
+    public function test_it_extracts_service_definitions_from_trait_properties()
+    {
+        $serviceProperties = $this->servicePropertyExtractor->extract(FieldsImportedWithTraitExample::class);
+
+        $this->assertContainsOnlyInstancesOf(Property::class, $serviceProperties);
+        $this->assertCount(3, $serviceProperties);
+        $this->assertEquals(new Property(FieldsImportedWithTraitExample::class, 'fieldWithServiceIdNoVar', 'foo.bar'), $serviceProperties[0]);
+        $this->assertEquals(new Property(FieldsImportedWithTraitExample::class, 'fieldWithVarNoServiceId', Foo::class), $serviceProperties[1]);
+        $this->assertEquals(new Property(FieldsImportedWithTraitExample::class, 'fieldWithVarAndServiceId', 'foo.bar'), $serviceProperties[2]);
     }
 
     public function test_it_ignores_a_duplicated_type()

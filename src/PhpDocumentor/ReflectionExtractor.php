@@ -22,11 +22,24 @@ final class ReflectionExtractor implements Extractor
     {
         $classReflection = new \ReflectionClass($class);
         $docBlockFactory = DocBlockFactory::createInstance(['inject' => Inject::class]);
-        $context = (new ContextFactory())->createFromReflector($classReflection);
+        $classContext = (new ContextFactory())->createFromReflector($classReflection);
 
-        return \array_filter(\array_map(function (\ReflectionProperty $propertyReflection) use ($docBlockFactory, $context) {
+        return \array_filter(\array_map(function (\ReflectionProperty $propertyReflection) use ($docBlockFactory, $classContext) {
+            $context = $this->getTraitContextIfExists($propertyReflection) ?? $classContext;
+
             return $this->createServiceProperty($propertyReflection, $docBlockFactory, $context);
         }, $classReflection->getProperties()));
+    }
+
+    private function getTraitContextIfExists(\ReflectionProperty $propertyReflection): ?Context
+    {
+        foreach ($propertyReflection->getDeclaringClass()->getTraits() as $trait) {
+            if ($trait->hasProperty($propertyReflection->getName())) {
+                return (new ContextFactory())->createFromReflector($trait);
+            }
+        }
+
+        return null;
     }
 
     private function createServiceProperty(\ReflectionProperty $propertyReflection, DocBlockFactory $docBlockFactory, Context $context): ?Property
@@ -42,7 +55,7 @@ final class ReflectionExtractor implements Extractor
             return null;
         }
 
-        $serviceId = $this->getServiceId((string) $inject, $docBlock);
+        $serviceId = $this->getServiceId((string)$inject, $docBlock);
 
         if (empty($serviceId)) {
             throw new MissingServiceIdException($propertyReflection->getDeclaringClass()->getName(), $propertyReflection->getName());
