@@ -24,11 +24,17 @@ final class ReflectionExtractor implements Extractor
         $docBlockFactory = DocBlockFactory::createInstance(['inject' => Inject::class]);
         $classContext = (new ContextFactory())->createFromReflector($classReflection);
 
-        return \array_filter(\array_map(function (\ReflectionProperty $propertyReflection) use ($docBlockFactory, $classContext) {
+        $props = \array_filter(\array_map(function (\ReflectionProperty $propertyReflection) use ($docBlockFactory, $classContext) {
             $context = $this->getTraitContextIfExists($propertyReflection) ?? $classContext;
 
             return $this->createServiceProperty($propertyReflection, $docBlockFactory, $context);
         }, $classReflection->getProperties()));
+
+        if (false !== $parent = $classReflection->getParentClass()) {
+            return \array_merge($props, $this->extract($parent->getName()));
+        }
+
+        return $props;
     }
 
     private function getTraitContextIfExists(\ReflectionProperty $propertyReflection): ?Context
