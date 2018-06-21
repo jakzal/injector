@@ -36,7 +36,7 @@ final class Inject implements Tag, StaticMethod
 
     public function render(Formatter $formatter = null)
     {
-        if (null !== $formatter) {
+        if ($formatter instanceof Formatter) {
             return $formatter->format($this);
         }
 
