@@ -34,7 +34,7 @@ final class ReflectionExtractor implements Extractor
             return \array_merge($props, $this->extract($parent->getName()));
         }
 
-        return \array_values($props);
+        return $props;
     }
 
     private function getTraitContextIfExists(\ReflectionProperty $propertyReflection): ?Context
