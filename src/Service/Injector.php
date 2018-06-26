@@ -8,6 +8,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use ReflectionProperty;
+use Zalas\Injector\Service\Exception\AmbiguousInjectionDefinitionException;
 use Zalas\Injector\Service\Exception\FailedToInjectServiceException;
 use Zalas\Injector\Service\Exception\MissingServiceException;
 
@@ -42,7 +43,28 @@ class Injector
      */
     public function inject(/*object */$object): void
     {
-        \array_map($this->getPropertyInjector($object), $this->extractProperties($object));
+        $props = $this->extractProperties($object);
+        $visitedProps = [];
+        foreach ($props as $index => $prop) {
+            $key = $prop->getPropertyName();
+            if (!isset($visitedProps[$key])) {
+                $visitedProps[$key] = $prop;
+
+                continue;
+            }
+
+            if ($prop->privatized()) {
+                continue;
+            }
+
+            if ($visitedProps[$key]->getClassName() !== $prop->getClassName()) {
+                throw new AmbiguousInjectionDefinitionException($visitedProps[$key], $prop);
+            }
+
+            unset($props[$index]);
+        }
+
+        \array_map($this->getPropertyInjector($object), $props);
     }
 
     private function getPropertyInjector(/*object */$object): Closure

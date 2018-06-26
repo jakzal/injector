@@ -11,14 +11,17 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Zalas\Injector\Service\ContainerFactory;
+use Zalas\Injector\Service\Exception\AmbiguousInjectionDefinitionException;
 use Zalas\Injector\Service\Exception\FailedToInjectServiceException;
 use Zalas\Injector\Service\Exception\MissingServiceException;
 use Zalas\Injector\Service\Extractor;
 use Zalas\Injector\Service\ExtractorFactory;
 use Zalas\Injector\Service\Injector;
 use Zalas\Injector\Service\Property;
+use Zalas\Injector\Tests\Service\Fixtures\ChildServices;
 use Zalas\Injector\Tests\Service\Fixtures\Service1;
 use Zalas\Injector\Tests\Service\Fixtures\Service2;
+use Zalas\Injector\Tests\Service\Fixtures\Service2Custom;
 use Zalas\Injector\Tests\Service\Fixtures\Services;
 
 class InjectorTest extends TestCase
@@ -114,5 +117,35 @@ class InjectorTest extends TestCase
         });
 
         $this->injector->inject(new Services());
+    }
+
+    public function test_it_throws_exception_if_the_same_non_privatized_property_is_defined_many_times_with_different_service_ids()
+    {
+        $this->expectException(AmbiguousInjectionDefinitionException::class);
+
+        $property1 = new Property(Services::class, 'service3', 'foo.service1', false);
+        $property2 = new Property(ChildServices::class, 'service3', 'foo.service2', false);
+
+        $this->extractor->extract(Services::class)->willReturn([$property1, $property2]);
+
+        $this->injector->inject(new Services());
+    }
+
+    public function test_it_injects_services_into_redefined_private_properties()
+    {
+        $property1 = new Property(Services::class, 'service2', 'foo.service2', true);
+        $property2 = new Property(ChildServices::class, 'service2', 'foo.service2custom', true);
+        $this->extractor->extract(ChildServices::class)->willReturn([$property1, $property2]);
+
+        $service2 = new Service2();
+        $service2custom = new Service2Custom();
+        $this->container->get('foo.service2')->willReturn($service2);
+        $this->container->get('foo.service2custom')->willReturn($service2custom);
+
+        $services = new ChildServices();
+        $this->injector->inject($services);
+
+        $this->assertSame($service2custom, $services->getChildService2());
+        $this->assertSame($service2, $services->getService2());
     }
 }

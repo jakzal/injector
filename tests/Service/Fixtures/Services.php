@@ -5,6 +5,7 @@ namespace Zalas\Injector\Tests\Service\Fixtures;
 
 class Services
 {
+    protected $service3;
     /**
      * @var Service1
      */

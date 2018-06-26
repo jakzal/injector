@@ -5,7 +5,6 @@ namespace Zalas\Injector\Tests\PhpDocumentor;
 
 use PHPUnit\Framework\TestCase;
 use Zalas\Injector\PhpDocumentor\ReflectionExtractor;
-use Zalas\Injector\Service\Exception\FailedToInjectServiceException;
 use Zalas\Injector\Service\Exception\MissingServiceIdException;
 use Zalas\Injector\Service\Extractor;
 use Zalas\Injector\Service\Property;
@@ -108,28 +107,40 @@ class ReflectionExtractorTest extends TestCase
         $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', '\\Baz', true), $serviceProperties[2]);
     }
 
-    public function test_it_throws_exception_when_overriding_an_already_annotated_public_property()
+    public function test_it_extracts_service_definitions_from_overriden_public_properties()
     {
-        $this->expectException(FailedToInjectServiceException::class);
+        $serviceProperties = $this->servicePropertyExtractor->extract(OverridePublicPropertyExample::class);
 
-        $this->servicePropertyExtractor->extract(OverridePublicPropertyExample::class);
+        $this->assertCount(5, $serviceProperties);
+        $this->assertEquals(new Property(OverridePublicPropertyExample::class, 'foo', 'bar', false), $serviceProperties[0]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', '\\Bar', false), $serviceProperties[1]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', '\\Foo', false), $serviceProperties[2]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', '\\Bar', false), $serviceProperties[3]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', '\\Baz', true), $serviceProperties[4]);
     }
 
-    public function test_it_throws_exception_when_overriding_an_already_annotated_protected_property()
+    public function test_it_extracts_service_definitions_from_overriden_protected_properties()
     {
-        $this->expectException(FailedToInjectServiceException::class);
+        $serviceProperties = $this->servicePropertyExtractor->extract(OverrideProtectedPropertyExample::class);
 
-        $this->servicePropertyExtractor->extract(OverrideProtectedPropertyExample::class);
+        $this->assertCount(5, $serviceProperties);
+        $this->assertEquals(new Property(OverrideProtectedPropertyExample::class, 'bar', 'something_else', false), $serviceProperties[0]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', '\\Foo', false), $serviceProperties[1]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', '\\Foo', false), $serviceProperties[2]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', '\\Bar', false), $serviceProperties[3]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', '\\Baz', true), $serviceProperties[4]);
     }
 
-    public function test_it_extracts_service_definitions_from_overrided_private_properties()
+    public function test_it_extracts_service_definitions_from_overriden_private_properties()
     {
         $serviceProperties = $this->servicePropertyExtractor->extract(OverridePrivatePropertyExample::class);
 
-        $this->assertCount(4, $serviceProperties);
+        $this->assertCount(6, $serviceProperties);
         $this->assertEquals(new Property(OverridePrivatePropertyExample::class, 'baz', 'something_else', true), $serviceProperties[0]);
         $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', '\\Foo', false), $serviceProperties[1]);
         $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', '\\Bar', false), $serviceProperties[2]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', '\\Baz', true), $serviceProperties[3]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', '\\Foo', false), $serviceProperties[3]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', '\\Bar', false), $serviceProperties[4]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', '\\Baz', true), $serviceProperties[5]);
     }
 }

@@ -9,7 +9,6 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\ContextFactory;
-use Zalas\Injector\Service\Exception\FailedToInjectServiceException;
 use Zalas\Injector\Service\Exception\MissingServiceIdException;
 use Zalas\Injector\Service\Extractor;
 use Zalas\Injector\Service\Property;
@@ -32,27 +31,7 @@ final class ReflectionExtractor implements Extractor
         }, $classReflection->getProperties()));
 
         if (false !== $parent = $classReflection->getParentClass()) {
-            $props = \array_merge($props, $this->extract($parent->getName()));
-
-            $visitedProps = [];
-            foreach ($props as $index => $prop) {
-                $key = $prop->getPropertyName();
-                if (!isset($visitedProps[$key])) {
-                    $visitedProps[$key] = $prop->getClassName();
-
-                    continue;
-                }
-
-                if ($prop->privatized()) {
-                    continue;
-                }
-
-                if ($visitedProps[$key] !== $prop->getClassName()) {
-                    throw new FailedToInjectServiceException($prop);
-                }
-
-                unset($props[$index]);
-            }
+            return \array_merge($props, $this->extract($parent->getName()));
         }
 
         return \array_values($props);
