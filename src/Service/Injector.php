@@ -55,7 +55,7 @@ class Injector
 
             if (
                 $prop->privatized() ||
-                count(array_filter($visitedProps[$key], function(Property $property) {
+                \count(\array_filter($visitedProps[$key], function (Property $property) {
                     return $property->privatized();
                 }))
             ) {

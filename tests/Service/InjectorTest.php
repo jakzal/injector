@@ -20,8 +20,8 @@ use Zalas\Injector\Service\Injector;
 use Zalas\Injector\Service\Property;
 use Zalas\Injector\Tests\Service\Fixtures\ChildServices;
 use Zalas\Injector\Tests\Service\Fixtures\Service1;
-use Zalas\Injector\Tests\Service\Fixtures\Service2;
 use Zalas\Injector\Tests\Service\Fixtures\Service1Custom;
+use Zalas\Injector\Tests\Service\Fixtures\Service2;
 use Zalas\Injector\Tests\Service\Fixtures\Service2Custom;
 use Zalas\Injector\Tests\Service\Fixtures\Services;
 
