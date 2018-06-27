@@ -6,9 +6,19 @@ namespace Zalas\Injector\Tests\Service\Fixtures;
 class ChildServices extends Services
 {
     /**
+     * @var Service1Custom
+     */
+    private $service1;
+
+    /**
      * @var Service2Custom
      */
     private $service2;
+
+    public function getChildService1(): ?Service1Custom
+    {
+        return $this->service1;
+    }
 
     public function getChildService2(): ?Service2Custom
     {

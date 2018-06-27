@@ -48,18 +48,27 @@ class Injector
         foreach ($props as $index => $prop) {
             $key = $prop->getPropertyName();
             if (!isset($visitedProps[$key])) {
-                $visitedProps[$key] = $prop;
+                $visitedProps[$key] = [$prop];
 
                 continue;
             }
 
-            if ($prop->privatized()) {
+            if (
+                $prop->privatized() ||
+                count(array_filter($visitedProps[$key], function(Property $property) {
+                    return $property->privatized();
+                }))
+            ) {
                 continue;
             }
 
-            if ($visitedProps[$key]->getClassName() !== $prop->getClassName()) {
-                throw new AmbiguousInjectionDefinitionException($visitedProps[$key], $prop);
+            foreach ($visitedProps[$key] as $visitedProp) {
+                if ($visitedProp->getClassName() !== $prop->getClassName()) {
+                    throw new AmbiguousInjectionDefinitionException($visitedProp, $prop);
+                }
             }
+
+            $visitedProps[$key][] = $prop;
 
             unset($props[$index]);
         }
