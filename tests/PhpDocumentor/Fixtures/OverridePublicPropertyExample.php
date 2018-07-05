@@ -5,6 +5,6 @@ namespace Zalas\Injector\Tests\PhpDocumentor\Fixtures;
 
 class OverridePublicPropertyExample extends PropertyVisibilityExample
 {
-    /** @inject bar */
+    /** @inject foo.overridden */
     public $foo;
 }

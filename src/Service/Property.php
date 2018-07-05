@@ -23,14 +23,9 @@ final class Property
     private $serviceId;
 
     /**
-     * @var bool
-     */
-    private $privatized;
-
-    /**
      * @throws MissingServicePropertyException
      */
-    public function __construct(string $className, string $propertyName, string $serviceId, bool $privatized = false)
+    public function __construct(string $className, string $propertyName, string $serviceId)
     {
         if (!\property_exists($className, $propertyName)) {
             throw new MissingServicePropertyException($className, $propertyName);
@@ -39,7 +34,6 @@ final class Property
         $this->propertyName = $propertyName;
         $this->serviceId = $serviceId;
         $this->className = $className;
-        $this->privatized = $privatized;
     }
 
     public function getPropertyName(): string
@@ -55,10 +49,5 @@ final class Property
     public function getClassName(): string
     {
         return $this->className;
-    }
-
-    public function privatized(): bool
-    {
-        return $this->privatized;
     }
 }

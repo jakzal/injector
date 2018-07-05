@@ -44,9 +44,9 @@ class ReflectionExtractorTest extends TestCase
 
         $this->assertContainsOnlyInstancesOf(Property::class, $serviceProperties);
         $this->assertCount(3, $serviceProperties);
-        $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithServiceIdNoVar', 'foo.bar', true), $serviceProperties[0]);
-        $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithVarNoServiceId', Foo::class, true), $serviceProperties[1]);
-        $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithVarAndServiceId', 'foo.bar', true), $serviceProperties[2]);
+        $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithServiceIdNoVar', 'foo.bar'), $serviceProperties[0]);
+        $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithVarNoServiceId', Foo::class), $serviceProperties[1]);
+        $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithVarAndServiceId', 'foo.bar'), $serviceProperties[2]);
     }
 
     public function test_it_extracts_service_definitions_from_trait_properties()
@@ -55,9 +55,9 @@ class ReflectionExtractorTest extends TestCase
 
         $this->assertContainsOnlyInstancesOf(Property::class, $serviceProperties);
         $this->assertCount(3, $serviceProperties);
-        $this->assertEquals(new Property(FieldsImportedWithTraitExample::class, 'fieldWithServiceIdNoVar', 'foo.bar', true), $serviceProperties[0]);
-        $this->assertEquals(new Property(FieldsImportedWithTraitExample::class, 'fieldWithVarNoServiceId', Foo::class, true), $serviceProperties[1]);
-        $this->assertEquals(new Property(FieldsImportedWithTraitExample::class, 'fieldWithVarAndServiceId', 'foo.bar', true), $serviceProperties[2]);
+        $this->assertEquals(new Property(FieldsImportedWithTraitExample::class, 'fieldWithServiceIdNoVar', 'foo.bar'), $serviceProperties[0]);
+        $this->assertEquals(new Property(FieldsImportedWithTraitExample::class, 'fieldWithVarNoServiceId', Foo::class), $serviceProperties[1]);
+        $this->assertEquals(new Property(FieldsImportedWithTraitExample::class, 'fieldWithVarAndServiceId', 'foo.bar'), $serviceProperties[2]);
     }
 
     public function test_it_ignores_a_duplicated_type()
@@ -66,7 +66,7 @@ class ReflectionExtractorTest extends TestCase
 
         $this->assertContainsOnlyInstancesOf(Property::class, $serviceProperties);
         $this->assertCount(1, $serviceProperties);
-        $this->assertEquals(new Property(DuplicatedVarExample::class, 'fooWithDuplicatedVar', Foo::class, true), $serviceProperties[0]);
+        $this->assertEquals(new Property(DuplicatedVarExample::class, 'fooWithDuplicatedVar', Foo::class), $serviceProperties[0]);
     }
 
     public function test_it_ignores_a_duplicated_inject()
@@ -75,7 +75,7 @@ class ReflectionExtractorTest extends TestCase
 
         $this->assertContainsOnlyInstancesOf(Property::class, $serviceProperties);
         $this->assertCount(1, $serviceProperties);
-        $this->assertEquals(new Property(DuplicatedInjectExample::class, 'fooWithDuplicatedInject', 'foo.bar', true), $serviceProperties[0]);
+        $this->assertEquals(new Property(DuplicatedInjectExample::class, 'fooWithDuplicatedInject', 'foo.bar'), $serviceProperties[0]);
     }
 
     public function test_it_throws_missing_service_id_exception_if_there_is_no_service_id_nor_type()
@@ -91,9 +91,9 @@ class ReflectionExtractorTest extends TestCase
 
         $this->assertContainsOnlyInstancesOf(Property::class, $serviceProperties);
         $this->assertCount(3, $serviceProperties);
-        $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithServiceIdNoVar', 'foo.bar', true), $serviceProperties[0]);
-        $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithVarNoServiceId', Foo::class, true), $serviceProperties[1]);
-        $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithVarAndServiceId', 'foo.bar', true), $serviceProperties[2]);
+        $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithServiceIdNoVar', 'foo.bar'), $serviceProperties[0]);
+        $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithVarNoServiceId', Foo::class), $serviceProperties[1]);
+        $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithVarAndServiceId', 'foo.bar'), $serviceProperties[2]);
     }
 
     public function test_it_extracts_service_definitions_from_redefined_properties()
@@ -102,45 +102,41 @@ class ReflectionExtractorTest extends TestCase
 
         $this->assertContainsOnlyInstancesOf(Property::class, $serviceProperties);
         $this->assertCount(3, $serviceProperties);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', '\\Foo', false), $serviceProperties[0]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', '\\Bar', false), $serviceProperties[1]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', '\\Baz', true), $serviceProperties[2]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', 'foo'), $serviceProperties[0]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', 'bar'), $serviceProperties[1]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', 'baz'), $serviceProperties[2]);
     }
 
     public function test_it_extracts_service_definitions_from_overriden_public_properties()
     {
         $serviceProperties = $this->servicePropertyExtractor->extract(OverridePublicPropertyExample::class);
 
-        $this->assertCount(5, $serviceProperties);
-        $this->assertEquals(new Property(OverridePublicPropertyExample::class, 'foo', 'bar', false), $serviceProperties[0]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', '\\Bar', false), $serviceProperties[1]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', '\\Foo', false), $serviceProperties[2]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', '\\Bar', false), $serviceProperties[3]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', '\\Baz', true), $serviceProperties[4]);
+        $this->assertCount(4, $serviceProperties);
+        $this->assertEquals(new Property(OverridePublicPropertyExample::class, 'foo', 'foo.overridden'), $serviceProperties[0]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', 'foo'), $serviceProperties[1]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', 'bar'), $serviceProperties[2]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', 'baz'), $serviceProperties[3]);
     }
 
     public function test_it_extracts_service_definitions_from_overriden_protected_properties()
     {
         $serviceProperties = $this->servicePropertyExtractor->extract(OverrideProtectedPropertyExample::class);
 
-        $this->assertCount(5, $serviceProperties);
-        $this->assertEquals(new Property(OverrideProtectedPropertyExample::class, 'bar', 'something_else', false), $serviceProperties[0]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', '\\Foo', false), $serviceProperties[1]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', '\\Foo', false), $serviceProperties[2]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', '\\Bar', false), $serviceProperties[3]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', '\\Baz', true), $serviceProperties[4]);
+        $this->assertCount(4, $serviceProperties);
+        $this->assertEquals(new Property(OverrideProtectedPropertyExample::class, 'bar', 'bar.overridden'), $serviceProperties[0]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', 'foo'), $serviceProperties[1]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', 'bar'), $serviceProperties[2]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', 'baz'), $serviceProperties[3]);
     }
 
     public function test_it_extracts_service_definitions_from_overriden_private_properties()
     {
         $serviceProperties = $this->servicePropertyExtractor->extract(OverridePrivatePropertyExample::class);
 
-        $this->assertCount(6, $serviceProperties);
-        $this->assertEquals(new Property(OverridePrivatePropertyExample::class, 'baz', 'something_else', true), $serviceProperties[0]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', '\\Foo', false), $serviceProperties[1]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', '\\Bar', false), $serviceProperties[2]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', '\\Foo', false), $serviceProperties[3]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', '\\Bar', false), $serviceProperties[4]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', '\\Baz', true), $serviceProperties[5]);
+        $this->assertCount(4, $serviceProperties);
+        $this->assertEquals(new Property(OverridePrivatePropertyExample::class, 'baz', 'baz.overridden'), $serviceProperties[0]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', 'foo'), $serviceProperties[1]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', 'bar'), $serviceProperties[2]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', 'baz'), $serviceProperties[3]);
     }
 }

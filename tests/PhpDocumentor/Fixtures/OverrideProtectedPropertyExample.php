@@ -5,6 +5,6 @@ namespace Zalas\Injector\Tests\PhpDocumentor\Fixtures;
 
 class OverrideProtectedPropertyExample extends PropertyVisibilityExample
 {
-    /** @inject something_else */
+    /** @inject bar.overridden */
     protected $bar;
 }
