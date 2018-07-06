@@ -47,26 +47,14 @@ class Injector
         $visitedProps = [];
         foreach ($props as $index => $prop) {
             $key = $prop->getPropertyName();
-            if (!isset($visitedProps[$key])) {
-                $visitedProps[$key] = [$prop];
 
-                continue;
+            if (!$this->isPrivate($prop)) {
+                $visitedProps[$key][] = $prop;
+
+                if (count($visitedProps[$key]) > 1) {
+                    throw new AmbiguousInjectionDefinitionException(current($visitedProps[$key]), $prop);
+                }
             }
-
-            if (
-                $this->isPrivate($prop) ||
-                \count(\array_filter($visitedProps[$key], function (Property $property) {
-                    return $this->isPrivate($property);
-                }))
-            ) {
-                continue;
-            }
-
-            foreach ($visitedProps[$key] as $visitedProp) {
-                throw new AmbiguousInjectionDefinitionException($visitedProp, $prop);
-            }
-
-            $visitedProps[$key][] = $prop;
         }
 
         \array_map($this->getPropertyInjector($object), $props);

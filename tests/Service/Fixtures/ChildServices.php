@@ -5,11 +5,11 @@ namespace Zalas\Injector\Tests\Service\Fixtures;
 
 class ChildServices extends Services
 {
-
     /**
      * @var Service2Custom
      */
     protected $service2;
+
     /**
      * @var Service1Custom
      */
