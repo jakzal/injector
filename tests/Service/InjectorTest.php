@@ -125,6 +125,7 @@ class InjectorTest extends TestCase
     public function test_it_throws_exception_when_injecting_service_into_redefined_non_private_properties()
     {
         $this->expectException(AmbiguousInjectionDefinitionException::class);
+        $this->expectExceptionCode(0);
 
         $property1 = new Property(ProtectedServices::class, 'service1', 'foo.service1');
         $property2 = new Property(ProtectedChildServices::class, 'service1', 'foo.service1custom');
