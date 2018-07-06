@@ -43,28 +43,7 @@ class Injector
      */
     public function inject(/*object */$object): void
     {
-        $props = $this->extractProperties($object);
-        $visitedProps = [];
-        foreach ($props as $index => $prop) {
-            $key = $prop->getPropertyName();
-
-            if (!$this->isPrivate($prop)) {
-                $visitedProps[$key][] = $prop;
-
-                if (\count($visitedProps[$key]) > 1) {
-                    throw new AmbiguousInjectionDefinitionException(\current($visitedProps[$key]), $prop);
-                }
-            }
-        }
-
-        \array_map($this->getPropertyInjector($object), $props);
-    }
-
-    private function isPrivate(Property $property): bool
-    {
-        $reflectionProperty = new ReflectionProperty($property->getClassName(), $property->getPropertyName());
-
-        return $reflectionProperty->isPrivate();
+        \array_map($this->getPropertyInjector($object), $this->validateProperties($this->extractProperties($object)));
     }
 
     private function getPropertyInjector(/*object */$object): Closure
@@ -90,6 +69,34 @@ class Injector
     private function extractProperties(/*object */$object): array
     {
         return $this->extractorFactory->create()->extract(\get_class($object));
+    }
+
+    /**
+     * @param array|Property[] $properties
+     * @return array|Property[]
+     */
+    private function validateProperties(array $properties): array
+    {
+        $visited = [];
+
+        foreach ($properties as $property) {
+            if (!$this->isPrivate($property)) {
+                $key = $property->getPropertyName();
+
+                if (isset($visited[$key])) {
+                    throw new AmbiguousInjectionDefinitionException($visited[$key], $property);
+                }
+
+                $visited[$key] = $property;
+            }
+        }
+
+        return $properties;
+    }
+
+    private function isPrivate(Property $property): bool
+    {
+        return (new ReflectionProperty($property->getClassName(), $property->getPropertyName()))->isPrivate();
     }
 
     private function getService(ContainerInterface $container, Property $property)
