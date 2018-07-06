@@ -19,6 +19,8 @@ use Zalas\Injector\Service\ExtractorFactory;
 use Zalas\Injector\Service\Injector;
 use Zalas\Injector\Service\Property;
 use Zalas\Injector\Tests\Service\Fixtures\ChildServices;
+use Zalas\Injector\Tests\Service\Fixtures\ProtectedChildServices;
+use Zalas\Injector\Tests\Service\Fixtures\ProtectedServices;
 use Zalas\Injector\Tests\Service\Fixtures\Service1;
 use Zalas\Injector\Tests\Service\Fixtures\Service1Custom;
 use Zalas\Injector\Tests\Service\Fixtures\Service2;
@@ -120,24 +122,27 @@ class InjectorTest extends TestCase
         $this->injector->inject(new Services());
     }
 
-    public function test_it_throws_exception_when_injecting_service_inside_redefined_property_with_non_privatized_parent()
+    public function test_it_throws_exception_when_injecting_service_into_redefined_non_private_properties()
     {
         $this->expectException(AmbiguousInjectionDefinitionException::class);
 
-        $property1 = new Property(Services::class, 'service1', 'foo.service1', false);
-        $property2 = new Property(ChildServices::class, 'service1', 'foo.service1custom', false);
+        $property1 = new Property(ProtectedServices::class, 'service1', 'foo.service1');
+        $property2 = new Property(ProtectedChildServices::class, 'service1', 'foo.service1custom');
 
-        $this->extractor->extract(ChildServices::class)->willReturn([$property1, $property2]);
+        $this->container->get('foo.service1')->willReturn(new Service1());
+        $this->container->get('foo.service1custom')->willReturn(new Service1Custom());
 
-        $this->injector->inject(new ChildServices());
+        $this->extractor->extract(ProtectedChildServices::class)->willReturn([$property1, $property2]);
+
+        $this->injector->inject(new ProtectedChildServices());
     }
 
-    public function test_it_injects_services_into_redefined_property_with_privatized_parent()
+    public function test_it_injects_services_into_redefined_private_properties()
     {
-        $property1 = new Property(Services::class, 'service1', 'foo.service1', true);
-        $property2 = new Property(Services::class, 'service2', 'foo.service2', true);
-        $property3 = new Property(ChildServices::class, 'service1', 'foo.service1custom', true);
-        $property4 = new Property(ChildServices::class, 'service2', 'foo.service2custom', false);
+        $property1 = new Property(Services::class, 'service1', 'foo.service1');
+        $property2 = new Property(Services::class, 'service2', 'foo.service2');
+        $property3 = new Property(ChildServices::class, 'service1', 'foo.service1custom');
+        $property4 = new Property(ChildServices::class, 'service2', 'foo.service2custom');
         $this->extractor->extract(ChildServices::class)->willReturn([$property1, $property2, $property3, $property4]);
 
         $service1 = new Service1();

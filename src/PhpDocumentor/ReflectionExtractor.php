@@ -76,12 +76,7 @@ final class ReflectionExtractor implements Extractor
             throw new MissingServiceIdException($propertyReflection->getDeclaringClass()->getName(), $propertyReflection->getName());
         }
 
-        return new Property(
-            $propertyReflection->getDeclaringClass()->getName(),
-            $propertyReflection->getName(),
-            $serviceId,
-            $propertyReflection->isPrivate()
-        );
+        return new Property($propertyReflection->getDeclaringClass()->getName(), $propertyReflection->getName(), $serviceId);
     }
 
     private function getServiceId(string $injectId, DocBlock $docBlock): ?string

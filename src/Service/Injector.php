@@ -54,9 +54,9 @@ class Injector
             }
 
             if (
-                $prop->privatized() ||
+                $this->isPrivate($prop) ||
                 \count(\array_filter($visitedProps[$key], function (Property $property) {
-                    return $property->privatized();
+                    return $this->isPrivate($property);
                 }))
             ) {
                 continue;
@@ -74,6 +74,13 @@ class Injector
         }
 
         \array_map($this->getPropertyInjector($object), $props);
+    }
+
+    private function isPrivate(Property $property): bool
+    {
+        $reflectionProperty = new ReflectionProperty($property->getClassName(), $property->getPropertyName());
+
+        return $reflectionProperty->isPrivate();
     }
 
     private function getPropertyInjector(/*object */$object): Closure

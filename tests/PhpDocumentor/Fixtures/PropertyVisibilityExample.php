@@ -5,12 +5,12 @@ namespace Zalas\Injector\Tests\PhpDocumentor\Fixtures;
 
 class PropertyVisibilityExample
 {
-    /** @inject \Foo */
+    /** @inject foo */
     public $foo;
 
-    /** @inject \Bar */
+    /** @inject bar */
     protected $bar;
 
-    /** @inject \Baz */
+    /** @inject baz */
     private $baz;
 }
