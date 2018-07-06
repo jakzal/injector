@@ -37,10 +37,12 @@ final class ReflectionExtractor implements Extractor
         $classContext = (new ContextFactory())->createFromReflector($class);
 
         return \array_filter(\array_map(
-            function (\ReflectionProperty $propertyReflection) use ($docBlockFactory, $classContext) {
+            function (\ReflectionProperty $propertyReflection) use ($docBlockFactory, $classContext, $class) {
                 $context = $this->getTraitContextIfExists($propertyReflection) ?? $classContext;
 
-                return $this->createServiceProperty($propertyReflection, $docBlockFactory, $context);
+                if ($propertyReflection->getDeclaringClass()->getName() === $class->getName()) {
+                    return $this->createServiceProperty($propertyReflection, $docBlockFactory, $context);
+                }
             },
             $class->getProperties()
         ));

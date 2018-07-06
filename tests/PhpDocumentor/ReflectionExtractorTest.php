@@ -111,36 +111,32 @@ class ReflectionExtractorTest extends TestCase
     {
         $serviceProperties = $this->servicePropertyExtractor->extract(OverridePublicPropertyExample::class);
 
-        $this->assertCount(5, $serviceProperties);
+        $this->assertCount(4, $serviceProperties);
         $this->assertEquals(new Property(OverridePublicPropertyExample::class, 'foo', 'foo.overridden'), $serviceProperties[0]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', 'bar'), $serviceProperties[1]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', 'foo'), $serviceProperties[2]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', 'bar'), $serviceProperties[3]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', 'baz'), $serviceProperties[4]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', 'foo'), $serviceProperties[1]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', 'bar'), $serviceProperties[2]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', 'baz'), $serviceProperties[3]);
     }
 
     public function test_it_extracts_service_definitions_from_overriden_protected_properties()
     {
         $serviceProperties = $this->servicePropertyExtractor->extract(OverrideProtectedPropertyExample::class);
 
-        $this->assertCount(5, $serviceProperties);
+        $this->assertCount(4, $serviceProperties);
         $this->assertEquals(new Property(OverrideProtectedPropertyExample::class, 'bar', 'bar.overridden'), $serviceProperties[0]);
         $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', 'foo'), $serviceProperties[1]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', 'foo'), $serviceProperties[2]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', 'bar'), $serviceProperties[3]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', 'baz'), $serviceProperties[4]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', 'bar'), $serviceProperties[2]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', 'baz'), $serviceProperties[3]);
     }
 
     public function test_it_extracts_service_definitions_from_overriden_private_properties()
     {
         $serviceProperties = $this->servicePropertyExtractor->extract(OverridePrivatePropertyExample::class);
 
-        $this->assertCount(6, $serviceProperties);
+        $this->assertCount(4, $serviceProperties);
         $this->assertEquals(new Property(OverridePrivatePropertyExample::class, 'baz', 'baz.overridden'), $serviceProperties[0]);
         $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', 'foo'), $serviceProperties[1]);
         $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', 'bar'), $serviceProperties[2]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'foo', 'foo'), $serviceProperties[3]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'bar', 'bar'), $serviceProperties[4]);
-        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', 'baz'), $serviceProperties[5]);
+        $this->assertEquals(new Property(PropertyVisibilityExample::class, 'baz', 'baz'), $serviceProperties[3]);
     }
 }
