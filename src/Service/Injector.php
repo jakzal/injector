@@ -63,14 +63,10 @@ class Injector
             }
 
             foreach ($visitedProps[$key] as $visitedProp) {
-                if ($visitedProp->getClassName() !== $prop->getClassName()) {
-                    throw new AmbiguousInjectionDefinitionException($visitedProp, $prop);
-                }
+                throw new AmbiguousInjectionDefinitionException($visitedProp, $prop);
             }
 
             $visitedProps[$key][] = $prop;
-
-            unset($props[$index]);
         }
 
         \array_map($this->getPropertyInjector($object), $props);
