@@ -13,7 +13,7 @@ class ChildServices extends Services
     /**
      * @var Service2Custom
      */
-    private $service2;
+    protected $service2;
 
     public function getChildService1(): ?Service1Custom
     {
