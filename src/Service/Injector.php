@@ -51,8 +51,8 @@ class Injector
             if (!$this->isPrivate($prop)) {
                 $visitedProps[$key][] = $prop;
 
-                if (count($visitedProps[$key]) > 1) {
-                    throw new AmbiguousInjectionDefinitionException(current($visitedProps[$key]), $prop);
+                if (\count($visitedProps[$key]) > 1) {
+                    throw new AmbiguousInjectionDefinitionException(\current($visitedProps[$key]), $prop);
                 }
             }
         }
