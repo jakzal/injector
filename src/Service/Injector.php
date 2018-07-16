@@ -77,21 +77,66 @@ class Injector
      */
     private function validateProperties(array $properties): array
     {
-        $visited = [];
+        $duplicates = $this->filterDuplicateProperties($properties);
 
-        foreach ($properties as $property) {
-            if (!$this->isPrivate($property)) {
-                $key = $property->getPropertyName();
-
-                if (isset($visited[$key])) {
-                    throw new AmbiguousInjectionDefinitionException($visited[$key], $property);
-                }
-
-                $visited[$key] = $property;
-            }
+        if (!empty($duplicates)) {
+            throw new AmbiguousInjectionDefinitionException(\array_pop($duplicates), \array_pop($duplicates));
         }
 
         return $properties;
+    }
+
+    /**
+     * @param array|Property[] $properties
+     * @return array|Property[]
+     */
+    private function filterDuplicateProperties(array $properties): array
+    {
+        $groupedByName = \array_reduce($properties, function (array $properties, Property $p) {
+            $properties[$p->getPropertyName()][] = $p;
+
+            return $properties;
+        }, []);
+        $duplicates = \array_filter($groupedByName, function (array $properties) {
+            if ($this->cannotHaveDuplicates($properties)) {
+                return false;
+            }
+
+            list($privates, $nonPrivates) = $this->splitOnVisibilityAndMapToClasses($properties);
+
+            $duplicatedPrivateProperty = \count(\array_unique($privates)) !== \count($privates);
+            $overriddenOrDuplicatedNonPrivateProperty = \count($nonPrivates) > 1;
+
+            return $duplicatedPrivateProperty || $overriddenOrDuplicatedNonPrivateProperty;
+        });
+
+        return \array_shift($duplicates) ?? [];
+    }
+
+    /**
+     * @param Property[] $properties
+     * @return bool
+     */
+    private function cannotHaveDuplicates(array $properties): bool
+    {
+        // micro-optimisation: if there's no more than one property there's no point to inspect their visibility.
+        // This is why infection ignores OneZeroInteger and LessThanOrEqualTo in this method.
+
+        return \count($properties) <= 1;
+    }
+
+    /**
+     * @param Property[] $properties
+     *
+     * @return string[][] tuple of class names with a private (left) or non-private (right) property
+     */
+    private function splitOnVisibilityAndMapToClasses(array $properties): array
+    {
+        return \array_reduce($properties, function (array $tuple, Property $p) {
+            $tuple[$this->isPrivate($p) ? 0 : 1][] = $p->getClassName();
+
+            return $tuple;
+        }, [[], []]);
     }
 
     private function isPrivate(Property $property): bool

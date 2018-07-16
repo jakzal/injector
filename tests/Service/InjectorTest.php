@@ -126,6 +126,7 @@ class InjectorTest extends TestCase
     {
         $this->expectException(AmbiguousInjectionDefinitionException::class);
         $this->expectExceptionCode(0);
+        $this->expectExceptionMessage(\sprintf('Services `foo.service1custom` and `foo.service1` have been configured to be injected in property `%s::service1`.', ProtectedChildServices::class));
 
         $property1 = new Property(ProtectedServices::class, 'service1', 'foo.service1');
         $property2 = new Property(ProtectedChildServices::class, 'service1', 'foo.service1custom');
@@ -136,6 +137,22 @@ class InjectorTest extends TestCase
         $this->extractor->extract(ProtectedChildServices::class)->willReturn([$property1, $property2]);
 
         $this->injector->inject(new ProtectedChildServices());
+    }
+
+    public function test_it_throws_exception_when_given_duplicate_properties()
+    {
+        $this->expectException(AmbiguousInjectionDefinitionException::class);
+        $this->expectExceptionCode(0);
+
+        $property1 = new Property(Services::class, 'service1', 'foo.service1');
+        $property2 = new Property(Services::class, 'service1', 'foo.service1');
+
+        $this->container->get('foo.service1')->willReturn(new Service1());
+        $this->container->get('foo.service1custom')->willReturn(new Service1Custom());
+
+        $this->extractor->extract(Services::class)->willReturn([$property1, $property2]);
+
+        $this->injector->inject(new Services());
     }
 
     public function test_it_injects_services_into_redefined_private_properties()

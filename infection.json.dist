@@ -11,6 +11,16 @@
     "mutators": {
         "@default": true,
         "IdenticalEqual": false,
-        "NotIdenticalNotEqual": false
+        "NotIdenticalNotEqual": false,
+        "OneZeroInteger": {
+            "ignore": [
+                "Zalas\\Injector\\Service\\Injector::cannotHaveDuplicates"
+            ]
+        },
+        "LessThanOrEqualTo": {
+            "ignore": [
+                "Zalas\\Injector\\Service\\Injector::cannotHaveDuplicates"
+            ]
+        }
     }
 }
