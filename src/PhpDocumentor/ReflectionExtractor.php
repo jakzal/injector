@@ -20,15 +20,32 @@ final class ReflectionExtractor implements Extractor
      */
     public function extract(string $class): array
     {
-        $classReflection = new \ReflectionClass($class);
+        return $this->extractFromReflection(new \ReflectionClass($class));
+    }
+
+    private function extractFromReflection(\ReflectionClass $class): array
+    {
+        $properties = $this->mapClassToServiceProperties($class);
+        $parentProperties = $class->getParentClass() ? $this->extractFromReflection($class->getParentClass()) : [];
+
+        return \array_merge($properties, $parentProperties);
+    }
+
+    private function mapClassToServiceProperties(\ReflectionClass $class): array
+    {
         $docBlockFactory = DocBlockFactory::createInstance(['inject' => Inject::class]);
-        $classContext = (new ContextFactory())->createFromReflector($classReflection);
+        $classContext = (new ContextFactory())->createFromReflector($class);
 
-        return \array_filter(\array_map(function (\ReflectionProperty $propertyReflection) use ($docBlockFactory, $classContext) {
-            $context = $this->getTraitContextIfExists($propertyReflection) ?? $classContext;
+        return \array_filter(\array_map(
+            function (\ReflectionProperty $propertyReflection) use ($docBlockFactory, $classContext, $class) {
+                $context = $this->getTraitContextIfExists($propertyReflection) ?? $classContext;
 
-            return $this->createServiceProperty($propertyReflection, $docBlockFactory, $context);
-        }, $classReflection->getProperties()));
+                if ($propertyReflection->getDeclaringClass()->getName() === $class->getName()) {
+                    return $this->createServiceProperty($propertyReflection, $docBlockFactory, $context);
+                }
+            },
+            $class->getProperties()
+        ));
     }
 
     private function getTraitContextIfExists(\ReflectionProperty $propertyReflection): ?Context
