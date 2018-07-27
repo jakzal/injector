@@ -26,9 +26,12 @@ use Zalas\Injector\Tests\Service\Fixtures\Service1Custom;
 use Zalas\Injector\Tests\Service\Fixtures\Service2;
 use Zalas\Injector\Tests\Service\Fixtures\Service2Custom;
 use Zalas\Injector\Tests\Service\Fixtures\Services;
+use Zalas\PHPUnit\Doubles\TestCase\TestDoubles;
 
 class InjectorTest extends TestCase
 {
+    use TestDoubles;
+
     /**
      * @var Injector
      */
@@ -56,12 +59,6 @@ class InjectorTest extends TestCase
 
     public function setUp()
     {
-        $this->container = $this->prophesize(ContainerInterface::class);
-        $this->extractor = $this->prophesize(Extractor::class);
-
-        $this->containerFactory = $this->prophesize(ContainerFactory::class);
-        $this->extractorFactory = $this->prophesize(ExtractorFactory::class);
-
         $this->containerFactory->create()->willReturn($this->container);
         $this->extractorFactory->create()->willReturn($this->extractor);
 
