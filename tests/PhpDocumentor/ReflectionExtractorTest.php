@@ -28,7 +28,7 @@ class ReflectionExtractorTest extends TestCase
      */
     private $servicePropertyExtractor;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->servicePropertyExtractor = new ReflectionExtractor();
     }

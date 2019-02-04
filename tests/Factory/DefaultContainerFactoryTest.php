@@ -24,7 +24,7 @@ class DefaultContainerFactoryTest extends TestCase
      */
     private $container;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->factory = new DefaultContainerFactory($this->container->reveal());
     }

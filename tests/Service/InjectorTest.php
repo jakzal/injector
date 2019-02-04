@@ -57,7 +57,7 @@ class InjectorTest extends TestCase
      */
     private $extractor;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->containerFactory->create()->willReturn($this->container);
         $this->extractorFactory->create()->willReturn($this->extractor);
