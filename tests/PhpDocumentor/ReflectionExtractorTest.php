@@ -28,7 +28,7 @@ class ReflectionExtractorTest extends TestCase
      */
     private $servicePropertyExtractor;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->servicePropertyExtractor = new ReflectionExtractor();
     }
@@ -81,6 +81,7 @@ class ReflectionExtractorTest extends TestCase
     public function test_it_throws_missing_service_id_exception_if_there_is_no_service_id_nor_type()
     {
         $this->expectException(MissingServiceIdException::class);
+        $this->expectExceptionMessageRegExp('/The `.*?::fooWithNoServiceIdAndVar` property was configured for service injection, but no service type nor id was given/');
 
         $this->servicePropertyExtractor->extract(MissingTypeExample::class);
     }

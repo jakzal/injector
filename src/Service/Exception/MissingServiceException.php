@@ -16,7 +16,7 @@ final class MissingServiceException extends RuntimeException implements Exceptio
                 'The `%s` service cannot be injected into `%s::%s` as it could not be found in the container.',
                 $property->getServiceId(),
                 $property->getClassName(),
-                $property->getClassName()
+                $property->getPropertyName()
             ),
             0,
             $previous

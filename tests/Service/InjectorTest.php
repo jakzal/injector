@@ -57,7 +57,7 @@ class InjectorTest extends TestCase
      */
     private $extractor;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->containerFactory->create()->willReturn($this->container);
         $this->extractorFactory->create()->willReturn($this->extractor);
@@ -93,6 +93,7 @@ class InjectorTest extends TestCase
     {
         $this->expectException(FailedToInjectServiceException::class);
         $this->expectExceptionCode(0);
+        $this->expectExceptionMessageRegExp('/Failed to inject the `foo.service1` service into `.*?::service1`/');
 
         $property1 = new Property(Services::class, 'service1', 'foo.service1');
 
@@ -109,6 +110,7 @@ class InjectorTest extends TestCase
     {
         $this->expectException(MissingServiceException::class);
         $this->expectExceptionCode(0);
+        $this->expectExceptionMessageRegExp('/The `foo.service1` service cannot be injected into `.*?::service1` as it could not be found in the container/');
 
         $property1 = new Property(Services::class, 'service1', 'foo.service1');
 

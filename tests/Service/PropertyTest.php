@@ -22,6 +22,7 @@ class PropertyTest extends TestCase
     public function test_it_throws_an_exception_if_class_property_does_not_exist()
     {
         $this->expectException(MissingServicePropertyException::class);
+        $this->expectExceptionMessageRegExp('/The `.*?::bar` property does not exist/');
 
         new Property(Foo::class, 'bar', 'my.service.id');
     }
