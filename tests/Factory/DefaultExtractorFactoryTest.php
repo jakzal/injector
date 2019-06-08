@@ -17,7 +17,7 @@ class DefaultExtractorFactoryTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->factory = new DefaultExtractorFactory();
+        $this->factory = new DefaultExtractorFactory([]);
     }
 
     public function test_it_is_an_extractor_factory()

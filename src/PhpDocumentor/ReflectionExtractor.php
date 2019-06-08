@@ -16,6 +16,19 @@ use Zalas\Injector\Service\Property;
 final class ReflectionExtractor implements Extractor
 {
     /**
+     * @var string[]
+     */
+    private $ignoredClasses;
+
+    /**
+     * @param string[] $ignoredClasses
+     */
+    public function __construct(array $ignoredClasses = [])
+    {
+        $this->ignoredClasses = $ignoredClasses;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function extract(string $class): array
@@ -33,6 +46,10 @@ final class ReflectionExtractor implements Extractor
 
     private function mapClassToServiceProperties(\ReflectionClass $class): array
     {
+        if (\in_array($class->getName(), $this->ignoredClasses)) {
+            return [];
+        }
+
         $docBlockFactory = DocBlockFactory::createInstance(['inject' => Inject::class]);
         $classContext = (new ContextFactory())->createFromReflector($class);
 
