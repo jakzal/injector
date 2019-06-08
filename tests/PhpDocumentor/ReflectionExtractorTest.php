@@ -30,7 +30,7 @@ class ReflectionExtractorTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->servicePropertyExtractor = new ReflectionExtractor();
+        $this->servicePropertyExtractor = new ReflectionExtractor([]);
     }
 
     public function test_it_is_a_property_extractor()
@@ -95,6 +95,15 @@ class ReflectionExtractorTest extends TestCase
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithServiceIdNoVar', 'foo.bar'), $serviceProperties[0]);
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithVarNoServiceId', Foo::class), $serviceProperties[1]);
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithVarAndServiceId', 'foo.bar'), $serviceProperties[2]);
+    }
+
+    public function test_it_does_not_extract_properties_from_ignored_classes()
+    {
+        $this->servicePropertyExtractor = new ReflectionExtractor([FieldInjectionExample::class]);
+
+        $serviceProperties = $this->servicePropertyExtractor->extract(ChildInjectionExample::class);
+
+        $this->assertCount(0, $serviceProperties);
     }
 
     public function test_it_extracts_service_definitions_from_redefined_properties()
