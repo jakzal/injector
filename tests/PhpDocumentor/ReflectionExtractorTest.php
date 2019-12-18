@@ -20,6 +20,7 @@ use Zalas\Injector\Tests\PhpDocumentor\Fixtures\OverrideProtectedPropertyExample
 use Zalas\Injector\Tests\PhpDocumentor\Fixtures\OverridePublicPropertyExample;
 use Zalas\Injector\Tests\PhpDocumentor\Fixtures\PropertyVisibilityExample;
 use Zalas\Injector\Tests\PhpDocumentor\Fixtures\RedefinePropertiesExample;
+use Zalas\Injector\Tests\PhpDocumentor\Fixtures\TypedFieldInjectionExample;
 
 class ReflectionExtractorTest extends TestCase
 {
@@ -47,6 +48,21 @@ class ReflectionExtractorTest extends TestCase
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithServiceIdNoVar', 'foo.bar'), $serviceProperties[0]);
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithVarNoServiceId', Foo::class), $serviceProperties[1]);
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithVarAndServiceId', 'foo.bar'), $serviceProperties[2]);
+    }
+
+    /**
+     * @requires PHP 7.4
+     */
+    public function test_it_extracts_service_definitions_from_typed_properties()
+    {
+        $serviceProperties = $this->servicePropertyExtractor->extract(TypedFieldInjectionExample::class);
+
+        $this->assertContainsOnlyInstancesOf(Property::class, $serviceProperties);
+        $this->assertCount(4, $serviceProperties);
+        $this->assertEquals(new Property(TypedFieldInjectionExample::class, 'fieldWithServiceIdNoType', 'foo.bar'), $serviceProperties[0]);
+        $this->assertEquals(new Property(TypedFieldInjectionExample::class, 'fieldWithTypeNoServiceId', Foo::class), $serviceProperties[1]);
+        $this->assertEquals(new Property(TypedFieldInjectionExample::class, 'fieldWithTypeAndServiceId', 'foo.bar'), $serviceProperties[2]);
+        $this->assertEquals(new Property(TypedFieldInjectionExample::class, 'fieldWithConflictingTypeAndVar', Foo::class), $serviceProperties[3]);
     }
 
     public function test_it_extracts_service_definitions_from_trait_properties()

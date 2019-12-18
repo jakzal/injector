@@ -105,7 +105,12 @@ final class ReflectionExtractor implements Extractor
 
     private function extractType(DocBlock $docBlock, \ReflectionProperty $propertyReflection): ?string
     {
-        return $this->extractTypeFromDocBlock($docBlock);
+        return $this->extractTypeFromPropertyReflection($propertyReflection) ?? $this->extractTypeFromDocBlock($docBlock);
+    }
+
+    private function extractTypeFromPropertyReflection(\ReflectionProperty $propertyReflection): ?string
+    {
+        return \PHP_VERSION_ID >= 70400 && $propertyReflection->getType() instanceof \ReflectionType ? $propertyReflection->getType()->getName() : null;
     }
 
     private function extractTypeFromDocBlock(DocBlock $docBlock): ?string
