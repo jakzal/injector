@@ -89,7 +89,7 @@ final class ReflectionExtractor implements Extractor
             return null;
         }
 
-        $serviceId = $this->getServiceId((string)$inject, $docBlock);
+        $serviceId = $this->getServiceId((string)$inject, $docBlock, $propertyReflection);
 
         if (empty($serviceId)) {
             throw new MissingServiceIdException($propertyReflection->getDeclaringClass()->getName(), $propertyReflection->getName());
@@ -98,12 +98,17 @@ final class ReflectionExtractor implements Extractor
         return new Property($propertyReflection->getDeclaringClass()->getName(), $propertyReflection->getName(), $serviceId);
     }
 
-    private function getServiceId(string $injectId, DocBlock $docBlock): ?string
+    private function getServiceId(string $injectId, DocBlock $docBlock, \ReflectionProperty $propertyReflection): ?string
     {
-        return $injectId ? $injectId : $this->extractType($docBlock);
+        return $injectId ? $injectId : $this->extractType($docBlock, $propertyReflection);
     }
 
-    private function extractType(DocBlock $docBlock): ?string
+    private function extractType(DocBlock $docBlock, \ReflectionProperty $propertyReflection): ?string
+    {
+        return $this->extractTypeFromDocBlock($docBlock);
+    }
+
+    private function extractTypeFromDocBlock(DocBlock $docBlock): ?string
     {
         $var = $this->getFirstTag($docBlock, 'var');
 
