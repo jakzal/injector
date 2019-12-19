@@ -12,13 +12,30 @@ Example of a class that default implementation of injector can work with:
 class Foo
 {
     /**
+     * @inject
+     */
+    private Service1 $service1;
+
+    /**
+     * @inject foo.service2
+     */
+    private Service2 $service2;
+}
+```
+
+Type annotations (`@var`) can be used with legacy PHP versions:
+
+```php
+class Foo
+{
+    /**
      * @var Service1
      * @inject
      */
     private $service1;
 
     /**
-     * @Service2
+     * @var Service2
      * @inject foo.service2
      */
     private $service2;
@@ -49,16 +66,20 @@ Properties should be annotated with `@inject` in order for them to be recognised
 class Foo
 {
     /**
-     * @var Service1
      * @inject
      */
-    private $service1;
+    private Service1 $service1;
 
     /**
-     * @Service2
      * @inject foo.service2
      */
-    private $service2;
+    private Service2 $service2;
+
+    /**
+     * @var Service3
+     * @inject
+     */
+    private $service3;
 
     public function hasService1(): bool
     {
@@ -69,6 +90,11 @@ class Foo
     {
         return $this->service2 instanceof Service2;
     }
+
+    public function hasService3(): bool
+    {
+        return $this->service3 instanceof Service3;
+    }
 }
 
 class Service1
@@ -76,6 +102,10 @@ class Service1
 }
 
 class Service2
+{
+}
+
+class Service3
 {
 }
 ```
