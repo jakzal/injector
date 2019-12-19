@@ -4,6 +4,11 @@ $finder = PhpCsFixer\Finder::create()
     ->in(['src', 'tests'])
 ;
 
+if (\PHP_VERSION < 70400) {
+    // Exclude a PHP 7.4 file
+    $finder->notName('TypedFieldInjectionExample.php');
+}
+
 return PhpCsFixer\Config::create()
     ->setRules([
         '@PSR2' => true,
