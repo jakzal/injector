@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Zalas\Injector\Tests\PhpDocumentor\Fixtures;
+namespace Zalas\Injector\Tests\Reflection\Fixtures;
 
 class OverrideProtectedPropertyExample extends PropertyVisibilityExample
 {

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Zalas\Injector\Tests\PhpDocumentor\Fixtures;
+namespace Zalas\Injector\Tests\Reflection\Fixtures;
 
-use Zalas\Injector\Tests\PhpDocumentor\Fixtures\Foo\Foo;
+use Zalas\Injector\Tests\Reflection\Fixtures\Foo\Foo;
 
 class FieldInjectionExample
 {

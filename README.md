@@ -118,8 +118,8 @@ the service container to be used with injector.
 
 ### Extractor & extractor factory
 
-The default implementation of extractor (`Zalas\Injector\PhpDocumentor\ReflectionExtractor`) leverages
-[phpDocumentor's reflection dockblock library](https://github.com/phpDocumentor/ReflectionDocBlock) for annotation parsing.
+The default implementation of extractor (`Zalas\Injector\Reflection\ReflectionExtractor`) leverages
+PHP's reflection for annotation parsing.
 It uses the `@inject` annotation to read service information.
 The annotation accepts service id as an optional value. Otherwise the type is used.
 `Zalas\Injector\Factory\DefaultExtractorFactory` creates this default implementation of extractor.

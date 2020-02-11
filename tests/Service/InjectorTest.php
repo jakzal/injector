@@ -123,6 +123,7 @@ class InjectorTest extends TestCase
     {
         $this->expectException(AmbiguousInjectionDefinitionException::class);
         $this->expectExceptionCode(0);
+        $this->expectExceptionMessage(\sprintf('Services `foo.service1` and `foo.service1` have been configured to be injected in property `%s::service1`.', Services::class));
 
         $property1 = new Property(Services::class, 'service1', 'foo.service1');
         $property2 = new Property(Services::class, 'service1', 'foo.service1');

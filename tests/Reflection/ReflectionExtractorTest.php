@@ -1,24 +1,24 @@
 <?php
 declare(strict_types=1);
 
-namespace Zalas\Injector\Tests\PhpDocumentor;
+namespace Zalas\Injector\Tests\Reflection;
 
 use PHPUnit\Framework\TestCase;
-use Zalas\Injector\PhpDocumentor\ReflectionExtractor;
+use Zalas\Injector\Reflection\ReflectionExtractor;
 use Zalas\Injector\Service\Exception\MissingServiceIdException;
 use Zalas\Injector\Service\Extractor;
 use Zalas\Injector\Service\Property;
-use Zalas\Injector\Tests\PhpDocumentor\Fixtures\ChildInjectionExample;
-use Zalas\Injector\Tests\PhpDocumentor\Fixtures\DuplicatedInjectExample;
-use Zalas\Injector\Tests\PhpDocumentor\Fixtures\FieldInjectionExample;
-use Zalas\Injector\Tests\PhpDocumentor\Fixtures\FieldsImportedWithTraitExample;
-use Zalas\Injector\Tests\PhpDocumentor\Fixtures\Foo\Foo;
-use Zalas\Injector\Tests\PhpDocumentor\Fixtures\MissingTypeExample;
-use Zalas\Injector\Tests\PhpDocumentor\Fixtures\OverridePrivatePropertyExample;
-use Zalas\Injector\Tests\PhpDocumentor\Fixtures\OverrideProtectedPropertyExample;
-use Zalas\Injector\Tests\PhpDocumentor\Fixtures\OverridePublicPropertyExample;
-use Zalas\Injector\Tests\PhpDocumentor\Fixtures\PropertyVisibilityExample;
-use Zalas\Injector\Tests\PhpDocumentor\Fixtures\RedefinePropertiesExample;
+use Zalas\Injector\Tests\Reflection\Fixtures\ChildInjectionExample;
+use Zalas\Injector\Tests\Reflection\Fixtures\DuplicatedInjectExample;
+use Zalas\Injector\Tests\Reflection\Fixtures\FieldInjectionExample;
+use Zalas\Injector\Tests\Reflection\Fixtures\FieldsImportedWithTraitExample;
+use Zalas\Injector\Tests\Reflection\Fixtures\Foo\Foo;
+use Zalas\Injector\Tests\Reflection\Fixtures\MissingTypeExample;
+use Zalas\Injector\Tests\Reflection\Fixtures\OverridePrivatePropertyExample;
+use Zalas\Injector\Tests\Reflection\Fixtures\OverrideProtectedPropertyExample;
+use Zalas\Injector\Tests\Reflection\Fixtures\OverridePublicPropertyExample;
+use Zalas\Injector\Tests\Reflection\Fixtures\PropertyVisibilityExample;
+use Zalas\Injector\Tests\Reflection\Fixtures\RedefinePropertiesExample;
 
 class ReflectionExtractorTest extends TestCase
 {
