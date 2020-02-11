@@ -10,22 +10,19 @@ use Zalas\Injector\Tests\Integration\Fixtures\Services\Service6;
 class ServicesBase
 {
     /**
-     * @var Service4
      * @inject
      */
-    protected $service4;
+    protected Service4 $service4;
 
     /**
-     * @var Service5
      * @inject
      */
-    protected $service5;
+    protected Service5 $service5;
 
     /**
-     * @var Service6
      * @inject
      */
-    private $service6;
+    private Service6 $service6;
 
     public function getService5(): ?Service5
     {

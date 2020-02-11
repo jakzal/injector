@@ -10,24 +10,19 @@ class FieldInjectionExample
     /**
      * @inject foo.bar
      */
-    private $fieldWithServiceIdNoVar;
+    private $fieldWithServiceIdNoType;
 
     /**
-     * @var Foo
      * @inject
      */
-    private $fieldWithVarNoServiceId;
+    private Foo $fieldWithTypeNoServiceId;
 
     /**
-     * @var Foo
      * @inject foo.bar
      */
-    private $fieldWithVarAndServiceId;
+    private Foo $fieldWithTypeAndServiceId;
 
-    /**
-     * @var Foo
-     */
-    private $fieldWithNoInject;
+    private Foo $fieldWithNoInject;
 
     private $fieldWithNoDocBlock;
 }

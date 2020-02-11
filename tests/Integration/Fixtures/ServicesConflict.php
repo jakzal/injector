@@ -8,8 +8,7 @@ use Zalas\Injector\Tests\Integration\Fixtures\Services\Service4;
 class ServicesConflict extends ServicesBase
 {
     /**
-     * @var Service4
      * @inject
      */
-    protected $service4;
+    protected Service4 $service4;
 }

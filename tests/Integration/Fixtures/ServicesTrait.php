@@ -8,8 +8,7 @@ use Zalas\Injector\Tests\Integration\Fixtures\Services\Service3;
 trait ServicesTrait
 {
     /**
-     * @var Service3
      * @inject
      */
-    private $service3;
+    private Service3 $service3;
 }

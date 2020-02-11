@@ -5,15 +5,9 @@ namespace Zalas\Injector\Tests\Service\Fixtures;
 
 class Services
 {
-    /**
-     * @var Service1
-     */
-    private $service1;
+    private Service1 $service1;
 
-    /**
-     * @var Service2
-     */
-    private $service2;
+    private Service2 $service2;
 
     public function getService1(): ?Service1
     {
