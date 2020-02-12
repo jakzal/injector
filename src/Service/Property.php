@@ -7,20 +7,11 @@ use Zalas\Injector\Service\Exception\MissingServicePropertyException;
 
 final class Property
 {
-    /**
-     * @var string
-     */
-    private $className;
+    private string $className;
 
-    /**
-     * @var string
-     */
-    private $propertyName;
+    private string $propertyName;
 
-    /**
-     * @var string
-     */
-    private $serviceId;
+    private string $serviceId;
 
     /**
      * @throws MissingServicePropertyException

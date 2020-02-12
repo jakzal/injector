@@ -21,16 +21,6 @@
             "ignore": [
                 "Zalas\\Injector\\Service\\Injector::cannotHaveDuplicates"
             ]
-        },
-        "GreaterThanOrEqualTo": {
-            "ignore": [
-                "Zalas\\Injector\\PhpDocumentor\\ReflectionExtractor::extractTypeFromPropertyReflection"
-            ]
-        },
-        "Coalesce": {
-            "ignore": [
-                "Zalas\\Injector\\PhpDocumentor\\ReflectionExtractor::extractType"
-            ]
         }
     }
 }

@@ -1,12 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Zalas\Injector\Tests\PhpDocumentor\Fixtures;
+namespace Zalas\Injector\Tests\Reflection\Fixtures;
 
-use Zalas\Injector\Tests\PhpDocumentor\Fixtures\Foo\Bar;
-use Zalas\Injector\Tests\PhpDocumentor\Fixtures\Foo\Foo;
+use Zalas\Injector\Tests\Reflection\Fixtures\Foo\Foo;
 
-class TypedFieldInjectionExample
+trait FieldsTrait
 {
     /**
      * @inject foo.bar
@@ -22,12 +21,6 @@ class TypedFieldInjectionExample
      * @inject foo.bar
      */
     private Foo $fieldWithTypeAndServiceId;
-
-    /**
-     * @var Bar
-     * @inject
-     */
-    private Foo $fieldWithConflictingTypeAndVar;
 
     private Foo $fieldWithNoInject;
 

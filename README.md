@@ -23,25 +23,6 @@ class Foo
 }
 ```
 
-Type annotations (`@var`) can be used with legacy PHP versions:
-
-```php
-class Foo
-{
-    /**
-     * @var Service1
-     * @inject
-     */
-    private $service1;
-
-    /**
-     * @var Service2
-     * @inject foo.service2
-     */
-    private $service2;
-}
-```
-
 ## Why?
 
 The library is useful in situations when we have no control over how objects are instantiated, so we can't use
@@ -75,12 +56,6 @@ class Foo
      */
     private Service2 $service2;
 
-    /**
-     * @var Service3
-     * @inject
-     */
-    private $service3;
-
     public function hasService1(): bool
     {
         return $this->service1 instanceof Service1;
@@ -90,11 +65,6 @@ class Foo
     {
         return $this->service2 instanceof Service2;
     }
-
-    public function hasService3(): bool
-    {
-        return $this->service3 instanceof Service3;
-    }
 }
 
 class Service1
@@ -102,10 +72,6 @@ class Service1
 }
 
 class Service2
-{
-}
-
-class Service3
 {
 }
 ```
@@ -152,8 +118,8 @@ the service container to be used with injector.
 
 ### Extractor & extractor factory
 
-The default implementation of extractor (`Zalas\Injector\PhpDocumentor\ReflectionExtractor`) leverages
-[phpDocumentor's reflection dockblock library](https://github.com/phpDocumentor/ReflectionDocBlock) for annotation parsing.
+The default implementation of extractor (`Zalas\Injector\Reflection\ReflectionExtractor`) leverages
+PHP's reflection for annotation parsing.
 It uses the `@inject` annotation to read service information.
 The annotation accepts service id as an optional value. Otherwise the type is used.
 `Zalas\Injector\Factory\DefaultExtractorFactory` creates this default implementation of extractor.

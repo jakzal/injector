@@ -6,10 +6,10 @@ layers:
     collectors:
       - type: className
         regex: ^Zalas\\Injector\\Factory\\.*
-  - name: PhpDocumentor
+  - name: Reflection
     collectors:
       - type: className
-        regex: ^Zalas\\Injector\\PhpDocumentor\\.*
+        regex: ^Zalas\\Injector\\Reflection\\.*
   - name: Service
     collectors:
       - type: className
@@ -18,10 +18,6 @@ layers:
     collectors:
       - type: className
         regex: ^Psr\\Container\\.*
-  - name: PhpDocumentor Reflection
-    collectors:
-      - type: className
-        regex: ^phpDocumentor\\Reflection\\.*
   - name: Other Vendors
     collectors:
       - type: bool
@@ -35,15 +31,12 @@ layers:
             regex: ^Zalas\\Injector\\.*
           - type: className
             regex: ^Psr\\Container\\.*
-          - type: className
-            regex: ^phpDocumentor\\Reflection\\.*
 ruleset:
   Factory:
-    - PhpDocumentor
+    - Reflection
     - Service
     - Psr Container
-  PhpDocumentor:
+  Reflection:
     - Service
-    - PhpDocumentor Reflection
   Service:
     - Psr Container

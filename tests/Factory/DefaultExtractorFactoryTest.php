@@ -5,7 +5,7 @@ namespace Zalas\Injector\Tests\Factory;
 
 use PHPUnit\Framework\TestCase;
 use Zalas\Injector\Factory\DefaultExtractorFactory;
-use Zalas\Injector\PhpDocumentor\ReflectionExtractor;
+use Zalas\Injector\Reflection\ReflectionExtractor;
 use Zalas\Injector\Service\ExtractorFactory;
 
 class DefaultExtractorFactoryTest extends TestCase
@@ -25,7 +25,7 @@ class DefaultExtractorFactoryTest extends TestCase
         $this->assertInstanceOf(ExtractorFactory::class, $this->factory);
     }
 
-    public function test_it_creates_phpdocumentor_reflection_extractor_by_default()
+    public function test_it_creates_the_reflection_extractor_by_default()
     {
         $this->assertInstanceOf(ReflectionExtractor::class, $this->factory->create());
     }
