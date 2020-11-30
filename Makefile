@@ -1,3 +1,5 @@
+IS_PHP8:=$(shell php -r 'echo (int)version_compare(PHP_VERSION, "8.0", ">=");')
+
 default: build
 
 build: install test
@@ -21,12 +23,20 @@ test: vendor cs deptrac phpunit infection
 test-min: update-min cs deptrac phpunit infection
 .PHONY: test-min
 
+ifeq ($(IS_PHP8),1)
+cs:
+else
 cs: tools/php-cs-fixer
 	tools/php-cs-fixer --dry-run --allow-risky=yes --no-interaction --ansi fix
+endif
 .PHONY: cs
 
+ifeq ($(IS_PHP8),1)
+cs-fix:
+else
 cs-fix: tools/php-cs-fixer
 	tools/php-cs-fixer --allow-risky=yes --no-interaction --ansi fix
+endif
 .PHONY: cs-fix
 
 deptrac: tools/deptrac
@@ -55,10 +65,10 @@ tools/php-cs-fixer:
 	curl -Ls http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -o tools/php-cs-fixer && chmod +x tools/php-cs-fixer
 
 tools/deptrac:
-	curl -Ls http://get.sensiolabs.de/deptrac.phar -o tools/deptrac && chmod +x tools/deptrac
+	curl -Ls https://github.com/sensiolabs-de/deptrac/releases/download/0.10.0/deptrac.phar -o tools/deptrac && chmod +x tools/deptrac
 
 tools/infection: tools/infection.pubkey
-	curl -Ls https://github.com/infection/infection/releases/download/0.15.1/infection.phar -o tools/infection && chmod +x tools/infection
+	curl -Ls https://github.com/infection/infection/releases/download/0.20.2/infection.phar -o tools/infection && chmod +x tools/infection
 
 tools/infection.pubkey:
-	curl -Ls https://github.com/infection/infection/releases/download/0.15.1/infection.phar.pubkey -o tools/infection.pubkey
+	curl -Ls https://github.com/infection/infection/releases/download/0.20.2/infection.phar.pubkey -o tools/infection.pubkey

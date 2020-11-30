@@ -4,15 +4,17 @@ declare(strict_types=1);
 namespace Zalas\Injector\Tests\Factory;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use Zalas\Injector\Factory\DefaultContainerFactory;
 use Zalas\Injector\Service\ContainerFactory;
-use Zalas\PHPUnit\Doubles\TestCase\TestDoubles;
+use Zalas\PHPUnit\Doubles\TestCase\ProphecyTestDoubles;
 
 class DefaultContainerFactoryTest extends TestCase
 {
-    use TestDoubles;
+    use ProphecyTrait;
+    use ProphecyTestDoubles;
 
     /**
      * @var DefaultContainerFactory
