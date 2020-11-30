@@ -6,6 +6,7 @@ namespace Zalas\Injector\Tests\Service;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
@@ -24,11 +25,12 @@ use Zalas\Injector\Tests\Service\Fixtures\Service1Custom;
 use Zalas\Injector\Tests\Service\Fixtures\Service2;
 use Zalas\Injector\Tests\Service\Fixtures\Service2Custom;
 use Zalas\Injector\Tests\Service\Fixtures\Services;
-use Zalas\PHPUnit\Doubles\TestCase\TestDoubles;
+use Zalas\PHPUnit\Doubles\TestCase\ProphecyTestDoubles;
 
 class InjectorTest extends TestCase
 {
-    use TestDoubles;
+    use ProphecyTrait;
+    use ProphecyTestDoubles;
 
     /**
      * @var Injector

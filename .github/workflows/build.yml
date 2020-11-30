@@ -1,0 +1,40 @@
+name: Build
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+    release:
+        types: [created]
+    schedule:
+        -   cron: '0 4 * * *'
+
+jobs:
+    tests:
+        runs-on: ubuntu-latest
+        name: Build and test
+        strategy:
+            matrix:
+                php: [7.4, 8.0]
+                deps: [high]
+                include:
+                    -   php: 8.0
+                        deps: low
+
+        steps:
+            -   uses: actions/checkout@v2
+                with:
+                    fetch-depth: 0
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: "${{ matrix.php }}"
+
+            -   name: Test & package
+                if: matrix.deps == 'high'
+                run: make update test
+
+            -   name: Test & package (low)
+                if: matrix.deps == 'low'
+                run: make update-min test-min
