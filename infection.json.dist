@@ -10,16 +10,76 @@
     },
     "mutators": {
         "@default": true,
-        "IdenticalEqual": false,
-        "NotIdenticalNotEqual": false,
-        "OneZeroInteger": {
+        "TrueValue": {
             "ignore": [
-                "Zalas\\Injector\\Service\\Injector::cannotHaveDuplicates"
+                "Zalas\\Injector\\Service\\Injector::injectService"
+            ]
+        },
+        "FalseValue": {
+            "ignore": [
+                "Zalas\\Injector\\Service\\Injector::filterDuplicateProperties"
+            ]
+        },
+        "UnwrapArrayUnique": {
+            "ignore": [
+                "Zalas\\Injector\\Service\\Injector::filterDuplicateProperties"
+            ]
+        },
+        "MethodCallRemoval": {
+            "ignore": [
+                "Zalas\\Injector\\Service\\Injector::injectService",
+                "Zalas\\Injector\\Service\\Injector::getPropertyInjector"
             ]
         },
         "LessThanOrEqualTo": {
             "ignore": [
                 "Zalas\\Injector\\Service\\Injector::cannotHaveDuplicates"
+            ]
+        },
+        "Identical": {
+            "ignore": [
+                "Zalas\\Injector\\Reflection\\ReflectionExtractor::filterReflectionPropertiesForInjection"
+            ]
+        },
+        "NotIdentical": {
+            "ignore": [
+                "Zalas\\Injector\\Service\\Injector::filterDuplicateProperties"
+            ]
+        },
+        "GreaterThan": {
+            "ignore": [
+                "Zalas\\Injector\\Service\\Injector::filterDuplicateProperties"
+            ]
+        },
+        "GreaterThanNegotiation": {
+            "ignore": [
+                "Zalas\\Injector\\Service\\Injector::filterDuplicateProperties"
+            ]
+        },
+        "LogicalOr": {
+            "ignore": [
+                "Zalas\\Injector\\Service\\Injector::filterDuplicateProperties"
+            ]
+        },
+        "LogicalAnd": {
+            "ignore": [
+                "Zalas\\Injector\\Reflection\\ReflectionExtractor::filterReflectionPropertiesForInjection"
+            ]
+        },
+        "Ternary": {
+            "ignore": [
+                "Zalas\\Injector\\Service\\Injector::splitOnVisibilityAndMapToClasses"
+            ]
+        },
+        "IncrementInteger": {
+            "ignore": [
+                "Zalas\\Injector\\Reflection\\ReflectionExtractor::filterReflectionPropertiesForInjection",
+                "Zalas\\Injector\\Service\\Injector::splitOnVisibilityAndMapToClasses"
+            ]
+        },
+        "DecrementInteger": {
+            "ignore": [
+                "Zalas\\Injector\\Service\\Injector::splitOnVisibilityAndMapToClasses"
             ]
         }
     }
