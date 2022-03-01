@@ -25,6 +25,11 @@
                 "Zalas\\Injector\\Service\\Injector::filterDuplicateProperties"
             ]
         },
+        "ArrayItemRemoval": {
+            "ignore": [
+                "Zalas\\Injector\\Service\\Injector::splitOnVisibilityAndMapToClasses"
+            ]
+        },
         "MethodCallRemoval": {
             "ignore": [
                 "Zalas\\Injector\\Service\\Injector::injectService",
@@ -74,12 +79,18 @@
         "IncrementInteger": {
             "ignore": [
                 "Zalas\\Injector\\Reflection\\ReflectionExtractor::filterReflectionPropertiesForInjection",
-                "Zalas\\Injector\\Service\\Injector::splitOnVisibilityAndMapToClasses"
+                "Zalas\\Injector\\Service\\Injector::splitOnVisibilityAndMapToClasses",
+                "Zalas\\Injector\\Service\\Exception\\AmbiguousInjectionDefinitionException::__construct",
+                "Zalas\\Injector\\Service\\Exception\\FailedToInjectServiceException::__construct",
+                "Zalas\\Injector\\Service\\Exception\\MissingServiceException::__construct"
             ]
         },
         "DecrementInteger": {
             "ignore": [
-                "Zalas\\Injector\\Service\\Injector::splitOnVisibilityAndMapToClasses"
+                "Zalas\\Injector\\Service\\Injector::splitOnVisibilityAndMapToClasses",
+                "Zalas\\Injector\\Service\\Exception\\AmbiguousInjectionDefinitionException::__construct",
+                "Zalas\\Injector\\Service\\Exception\\FailedToInjectServiceException::__construct",
+                "Zalas\\Injector\\Service\\Exception\\MissingServiceException::__construct"
             ]
         }
     }
