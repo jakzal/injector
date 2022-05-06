@@ -63,7 +63,7 @@ class InjectorTest extends TestCase
                 };
             }
 
-            public function has($id)
+            public function has($id): bool
             {
                 return \in_array($id, [Service1::class, Service2::class, Service3::class, Service4::class, Service5::class, Service6::class, 'foo.service2'], true);
             }
