@@ -3,4 +3,4 @@
 /composer.lock
 /vendor/
 /.deptrac.cache
-/.php_cs.cache
+/.php-cs-fixer.cache
