@@ -34,7 +34,7 @@ deptrac: tools/deptrac
 .PHONY: deptrac
 
 infection: tools/infection tools/infection.pubkey
-	phpdbg -qrr ./tools/infection --no-interaction --formatter=progress --min-msi=100 --min-covered-msi=100 --ansi
+	./tools/infection --no-interaction --formatter=progress --min-msi=100 --min-covered-msi=100 --ansi
 .PHONY: infection
 
 phpunit: tools/phpunit
@@ -58,7 +58,7 @@ tools/deptrac:
 	curl -Ls https://github.com/sensiolabs-de/deptrac/releases/download/1.0.2/deptrac.phar -o tools/deptrac && chmod +x tools/deptrac
 
 tools/infection: tools/infection.pubkey
-	curl -Ls https://github.com/infection/infection/releases/download/0.26.16/infection.phar -o tools/infection && chmod +x tools/infection
+	curl -Ls https://github.com/infection/infection/releases/download/0.26.20/infection.phar -o tools/infection && chmod +x tools/infection
 
 tools/infection.pubkey:
-	curl -Ls https://github.com/infection/infection/releases/download/0.26.16/infection.phar.pubkey -o tools/infection.pubkey
+	curl -Ls https://github.com/infection/infection/releases/download/0.26.20/infection.phar.pubkey -o tools/infection.pubkey
