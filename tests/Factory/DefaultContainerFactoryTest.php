@@ -9,12 +9,10 @@ use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use Zalas\Injector\Factory\DefaultContainerFactory;
 use Zalas\Injector\Service\ContainerFactory;
-use Zalas\PHPUnit\Doubles\TestCase\ProphecyTestDoubles;
 
 class DefaultContainerFactoryTest extends TestCase
 {
     use ProphecyTrait;
-    use ProphecyTestDoubles;
 
     /**
      * @var DefaultContainerFactory
@@ -28,6 +26,7 @@ class DefaultContainerFactoryTest extends TestCase
 
     protected function setUp(): void
     {
+        $this->container = $this->prophesize(ContainerInterface::class);
         $this->factory = new DefaultContainerFactory($this->container->reveal());
     }
 

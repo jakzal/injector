@@ -25,12 +25,10 @@ use Zalas\Injector\Tests\Service\Fixtures\Service1Custom;
 use Zalas\Injector\Tests\Service\Fixtures\Service2;
 use Zalas\Injector\Tests\Service\Fixtures\Service2Custom;
 use Zalas\Injector\Tests\Service\Fixtures\Services;
-use Zalas\PHPUnit\Doubles\TestCase\ProphecyTestDoubles;
 
 class InjectorTest extends TestCase
 {
     use ProphecyTrait;
-    use ProphecyTestDoubles;
 
     /**
      * @var Injector
@@ -59,6 +57,11 @@ class InjectorTest extends TestCase
 
     protected function setUp(): void
     {
+        $this->containerFactory = $this->prophesize(ContainerFactory::class);
+        $this->extractorFactory = $this->prophesize(ExtractorFactory::class);
+        $this->container = $this->prophesize(ContainerInterface::class);
+        $this->extractor = $this->prophesize(Extractor::class);
+
         $this->containerFactory->create()->willReturn($this->container);
         $this->extractorFactory->create()->willReturn($this->extractor);
 
