@@ -14,10 +14,12 @@
         "psr/container": "^1.0 || ^2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.0",
+        "phpunit/phpunit": "^10.0",
         "phpspec/prophecy": "^1.9",
-        "phpspec/prophecy-phpunit": "^2.0"
+        "phpspec/prophecy-phpunit": "dev-master"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Zalas\\Injector\\": "src/"
