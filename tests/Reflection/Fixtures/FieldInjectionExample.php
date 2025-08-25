@@ -25,4 +25,7 @@ class FieldInjectionExample
     private Foo $fieldWithNoInject;
 
     private $fieldWithNoDocBlock;
+
+    /** @inject */
+    private Foo $fieldWithTypeNoServiceIdOneLine;
 }

@@ -61,7 +61,7 @@ final class ReflectionExtractor implements Extractor
 
     private function extractServiceId(\ReflectionProperty $property): string
     {
-        if (1 === \preg_match('#\s*\**\s*\@inject (?P<serviceId>[^\s]+)#', $property->getDocComment(), $matches)) {
+        if (1 === \preg_match('#\s*\**\s*\@inject (?P<serviceId>[^\s*]+)#', $property->getDocComment(), $matches)) {
             return $matches['serviceId'];
         } elseif ($property->getType() instanceof \ReflectionType) {
             return $property->getType()->getName();

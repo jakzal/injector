@@ -42,10 +42,11 @@ class ReflectionExtractorTest extends TestCase
         $serviceProperties = $this->servicePropertyExtractor->extract(FieldInjectionExample::class);
 
         $this->assertContainsOnlyInstancesOf(Property::class, $serviceProperties);
-        $this->assertCount(3, $serviceProperties);
+        $this->assertCount(4, $serviceProperties);
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithServiceIdNoType', 'foo.bar'), $serviceProperties[0]);
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithTypeNoServiceId', Foo::class), $serviceProperties[1]);
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithTypeAndServiceId', 'foo.bar'), $serviceProperties[2]);
+        $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithTypeNoServiceIdOneLine', Foo::class), $serviceProperties[3]);
     }
 
     public function test_it_extracts_service_definitions_from_trait_properties()
@@ -53,10 +54,11 @@ class ReflectionExtractorTest extends TestCase
         $serviceProperties = $this->servicePropertyExtractor->extract(FieldsImportedWithTraitExample::class);
 
         $this->assertContainsOnlyInstancesOf(Property::class, $serviceProperties);
-        $this->assertCount(3, $serviceProperties);
+        $this->assertCount(4, $serviceProperties);
         $this->assertEquals(new Property(FieldsImportedWithTraitExample::class, 'fieldWithServiceIdNoType', 'foo.bar'), $serviceProperties[0]);
         $this->assertEquals(new Property(FieldsImportedWithTraitExample::class, 'fieldWithTypeNoServiceId', Foo::class), $serviceProperties[1]);
         $this->assertEquals(new Property(FieldsImportedWithTraitExample::class, 'fieldWithTypeAndServiceId', 'foo.bar'), $serviceProperties[2]);
+        $this->assertEquals(new Property(FieldsImportedWithTraitExample::class, 'fieldWithTypeNoServiceIdOneLine', Foo::class), $serviceProperties[3]);
     }
 
     public function test_it_ignores_a_duplicated_inject()
@@ -81,10 +83,11 @@ class ReflectionExtractorTest extends TestCase
         $serviceProperties = $this->servicePropertyExtractor->extract(ChildInjectionExample::class);
 
         $this->assertContainsOnlyInstancesOf(Property::class, $serviceProperties);
-        $this->assertCount(3, $serviceProperties);
+        $this->assertCount(4, $serviceProperties);
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithServiceIdNoType', 'foo.bar'), $serviceProperties[0]);
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithTypeNoServiceId', Foo::class), $serviceProperties[1]);
         $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithTypeAndServiceId', 'foo.bar'), $serviceProperties[2]);
+        $this->assertEquals(new Property(FieldInjectionExample::class, 'fieldWithTypeNoServiceIdOneLine', Foo::class), $serviceProperties[3]);
     }
 
     public function test_it_does_not_extract_properties_from_ignored_classes()
